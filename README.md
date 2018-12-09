@@ -1,19 +1,3 @@
-# Start project
-
-This will create a `HelloDjango` directory in your current directory
-```
-django-admin startproject HelloDjango
-```
-
-# The development server
-
-```
-python manage.py runserver
-```
-
-```
-python manage.py help
-```
 
 # Django is `MVT` framework
 
@@ -30,18 +14,6 @@ python manage.py help
 
 https://stackoverflow.com/questions/4867793/using-djangos-built-in-web-server-in-a-production-environment
 
-# Project folder structure
-```
-myproject/
-   manage.py
-   myproject/
-      __init__.py
-      settings.py
-      urls.py
-      wsgi.py
-```
-
-`__init__.py` is just for python, treat this folder as package
 
 ## Don't commit `migrations` folder to git
 * it will create conflicts
