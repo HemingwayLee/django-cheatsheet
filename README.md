@@ -1,3 +1,14 @@
+# How to start
+
+```
+django-admin startproject myproject
+django-admin startapp myapp
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver
+```
+
 
 # Django is `MVT` framework
 
