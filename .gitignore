@@ -12,6 +12,9 @@ db.sqlite3
 *.pyc
 /venv
 
+### IDE ###
+/.vscode
+
 ### Environment ###
 .env
 
