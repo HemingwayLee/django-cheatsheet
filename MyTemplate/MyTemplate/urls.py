@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('hello/', views.hello),
     path('context/', views.hello_context),
+    path('more/', views.more_template),
 ]
