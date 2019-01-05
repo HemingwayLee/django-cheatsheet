@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 def hello(request):
     return render(request, 'helloworld.html')
 
-def hello_context(request):
-    ct = { "age": 33 }
+def hello_context(request, myname):
+    ct = { "name": myname }
     return render(request, 'hellocontext.html', ct)
 
 def more_template(request):
