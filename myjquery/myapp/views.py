@@ -7,3 +7,6 @@ def index(request):
 
 def hello(request):
     return JsonResponse(json.loads('{"abc": 123}'), status=200)
+
+def table(request):
+    return JsonResponse(json.loads('[{"abc":123},{"abc":567}]'), safe=False, status=200)
