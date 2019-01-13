@@ -13,7 +13,7 @@
         $.ajax({
           type: 'GET',
           dataType: 'json',
-          url: 'http://127.0.0.1:8000/hello',
+          url: 'http://{{address}}:8000/hello',
           success: function(data) {
             $('#ans').text(data.abc);
           },
