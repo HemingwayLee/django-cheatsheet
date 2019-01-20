@@ -20,4 +20,5 @@ from myapp import views
 urlpatterns = [
     path('show/', views.show),
     path('admin/', admin.site.urls),
+    path('media/', views.get_media),
 ]
