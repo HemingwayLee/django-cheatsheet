@@ -18,3 +18,7 @@ python3 manage.py runserver
 
 * We provide the Model, the view and the template then just maps it to a URL
 
+# Tips
+
+## Extend `users` model
+https://stackoverflow.com/questions/44109/extending-the-user-model-with-custom-fields-in-django
