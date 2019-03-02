@@ -20,6 +20,6 @@ from main import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add/user/', views.add_users),
-    path('sp/', views.sp),
-    path('complex/join/', views.join),
+    path('run/sql/', views.run_sql),
+    path('show/all/', views.show_all),
 ]
