@@ -66,9 +66,6 @@ def sort(request):
 
     return HttpResponse(output)
 
-def order(request):
-    return HttpResponse("order", status=200)
-
 def count(request):
     return HttpResponse("count", status=200)
 
