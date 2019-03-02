@@ -3,11 +3,11 @@ from django.db import connection
 from .models import Clients
 
 def show_all(request):
-  output = ""
-  for val in Clients.objects.all().values():
-    output += str(val['id']) + " " + val['name'] + " " + str(val['age']) + "<br>"
+    output = ""
+    for val in Clients.objects.all().values():
+        output += str(val['id']) + " " + val['name'] + " " + str(val['age']) + "<br>"
 
-  return HttpResponse(output)
+    return HttpResponse(output)
 
 
 def add_users(request):
@@ -60,9 +60,11 @@ def raw_param(request):
     return HttpResponse("raw2", status=200)
 
 def sort(request):
+    output = ""
+    for val in Clients.objects.order_by("-age").values():
+        output += str(val['id']) + " " + val['name'] + " " + str(val['age']) + "<br>"
 
-    
-    return HttpResponse("sort", status=200)
+    return HttpResponse(output)
 
 def order(request):
     return HttpResponse("order", status=200)

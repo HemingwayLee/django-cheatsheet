@@ -22,4 +22,5 @@ urlpatterns = [
     path('add/user/', views.add_users),
     path('run/sql/', views.run_sql),
     path('show/all/', views.show_all),
+    path('show/sort/', views.sort)
 ]
