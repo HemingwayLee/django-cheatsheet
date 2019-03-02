@@ -1,4 +1,24 @@
 from django.http import HttpResponse
+from .models import Clients
+
+def add_users(request):
+    clients = [
+        { "name":"James", "age":26, "dob":"1985-04-14" }, 
+        { "name":"Kenny", "age":28, "dob":"1987-04-01" }, 
+        { "name":"Lee", "age":33, "dob":"1990-08-15" }, 
+    ]
+
+    objs = [
+        Clients(
+            name=c["name"],
+            age=c["age"],
+            dob=c["dob"],
+        ) for c in clients
+    ]
+    
+    Clients.objects.bulk_create(objs)
+
+    return HttpResponse("created!!", status=200)
 
 def sp(request):
     return HttpResponse("sp", status=200)
