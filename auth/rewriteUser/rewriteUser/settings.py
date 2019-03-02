@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
 ]
 
+# not the right way
 # AUTH_USER_MODEL = "main.models.MyUser"
 AUTH_USER_MODEL = "main.MyUser"
 
