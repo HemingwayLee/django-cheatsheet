@@ -22,3 +22,12 @@ python3 manage.py runserver
 
 ## Extend `users` model
 https://stackoverflow.com/questions/44109/extending-the-user-model-with-custom-fields-in-django
+
+
+# Todo
+## class based views
+https://stackoverflow.com/questions/17414622/django-a-good-tutorial-for-class-based-views
+
+## middleware 
+
+
