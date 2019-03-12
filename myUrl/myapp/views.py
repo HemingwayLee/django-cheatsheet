@@ -1,4 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.conf import settings
+from django.shortcuts import render
+import base64
 
 def hello(request):
     return HttpResponse("hello, request")
@@ -13,4 +16,19 @@ def multiple(request, myid, name):
 def three(request, num):
     return HttpResponse("Hello, my num is %s" % str(num))
 
+def return_img(request):
+    with open(settings.MEDIA_ROOT + "/hello.jpg", "rb") as f:
+        img = f.read()
+    
+    return HttpResponse(img, content_type="image/jpg")
 
+def return_base64_img(request):
+    res = {}
+    with open(settings.MEDIA_ROOT + "/hello.jpg", "rb") as f:
+        data = base64.b64encode(f.read()).decode()
+    
+    res["js"] = data
+    return JsonResponse(res) 
+
+def show_base64(request):
+    return render(request, "show.html")

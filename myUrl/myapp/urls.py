@@ -10,4 +10,8 @@ urlpatterns = [
     path('mul/<int:myid>/<str:name>', views.multiple),
     # custom path converter
     path('custom/<ddd:num>/', views.three),
+    # return image
+    path('image/', views.return_img),
+    path('image/base64/', views.return_base64_img),
+    path('show/', views.show_base64)
 ]
