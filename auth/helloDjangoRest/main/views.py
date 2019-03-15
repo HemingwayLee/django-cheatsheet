@@ -1,10 +1,10 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.contrib import auth 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.authtoken.models import Token
-import requests
+import json
 
 @api_view(["GET"])
 def signout(request):
@@ -19,15 +19,16 @@ def signin(request):
 @api_view(["POST"])
 @permission_classes((AllowAny, ))
 def do_signin(request):
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-  
-    user = auth.authenticate(username=username, password=password)
+    body = json.loads(request.body.decode("utf-8"))
+    print(body["username"])
+    print(body["password"])
+
+    user = auth.authenticate(username=body["username"], password=body["password"])
 
     if user is not None and user.is_active:
-        print("Successful, redirect to hello...")
+        print("Successful, return token")
         token, _ = Token.objects.get_or_create(user=user)
-        return HttpResponse(token)
+        return JsonResponse({"token": str(token)}, safe=False, status=200)
     else:
         print("user not exist... redirect to signin page...")
         return render(request, 'form_template.html')
