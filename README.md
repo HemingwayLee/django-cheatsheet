@@ -28,6 +28,9 @@ https://stackoverflow.com/questions/44109/extending-the-user-model-with-custom-f
 ## class based views
 https://stackoverflow.com/questions/17414622/django-a-good-tutorial-for-class-based-views
 
+## class vs function in view  
+https://stackoverflow.com/questions/14788181/class-based-views-vs-function-based-views
+
 ## middleware 
 
 
