@@ -28,6 +28,28 @@
           $("#token").text(str);
 
           _token = data.token;
+          $('#signout').prop('disabled', false);
+          $('#signin').prop('disabled', true);
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          $('#res').text(`${textStatus}`);
+        },
+      });
+    }
+
+    function doSignout() {
+      $.ajax({
+        type: 'GET',
+        dataType: 'json',
+        headers: {'Authorization': 'Token ' + _token},
+        url: 'http://127.0.0.1:8000/signout/',
+        success: function(data) {
+          _token = "";
+          $('#signout').prop('disabled', true);
+          $('#signin').prop('disabled', false);
+
+          const str = JSON.stringify(data, null, 2);
+          $('#res').text(str);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
           $('#res').text(`${textStatus}`);
@@ -52,6 +74,11 @@
     }
 
     $(document).ready(function() {
+      $('#signout').prop('disabled', true);
+      $('#signout').on('click', function() {
+        doSignout();
+      });
+
       $('#signin').on('click', function() {
         doSignin();
       });
@@ -95,6 +122,9 @@
       <input type="password" name="password" value="" id="password"> <br />
       <button id="signin" type="button" class="btn btn-info">
         <span class="glyphicon glyphicon-tags"></span> Signin
+      </button>
+      <button id="signout" type="button" class="btn btn-info">
+        <span class="glyphicon glyphicon-tags"></span> Signout
       </button>
       <hr>
       <button id="hello" type="button" class="btn btn-primary">

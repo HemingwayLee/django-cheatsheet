@@ -8,10 +8,10 @@ from rest_framework.authtoken.models import Token
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
 
-# @api_view(["GET"])
-# def signout(request):
-#     auth.logout(request)
-#     return render(request, 'form_template.html')
+@api_view(["GET"])
+def signout(request):
+    request.user.auth_token.delete()
+    return JsonResponse({"status":"signout"}, safe=False, status=200)
 
 @api_view(["GET"])
 @permission_classes((AllowAny, ))
