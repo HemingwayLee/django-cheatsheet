@@ -1,5 +1,5 @@
 import json
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.contrib import auth 
 from rest_framework.decorators import api_view, permission_classes
@@ -8,10 +8,10 @@ from rest_framework.authtoken.models import Token
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import user_passes_test
 
-# @api_view(["GET"])
-# def signout(request):
-#     auth.logout(request)
-#     return render(request, 'form_template.html')
+@api_view(["GET"])
+def signout(request):
+    request.user.auth_token.delete()
+    return JsonResponse({"status":"signout"}, safe=False, status=200)
 
 @api_view(["GET"])
 @permission_classes((AllowAny, ))
@@ -32,7 +32,7 @@ def do_signin(request):
             safe=False, 
             status=200)
     else:
-        return HttpResponse(status=401)
+        return JsonResponse({"status":"account or password incorrect"}, safe=False, status=401)
 
 @api_view(["GET"])
 @permission_classes((AllowAny, ))
