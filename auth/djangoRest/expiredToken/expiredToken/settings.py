@@ -62,6 +62,8 @@ MIDDLEWARE = [
     'main.middlewares.MyMiddleware',
 ]
 
+EXPIRATION_IN_MIN = 1
+
 ROOT_URLCONF = 'expiredToken.urls'
 
 TEMPLATES = [

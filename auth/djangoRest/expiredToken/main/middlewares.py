@@ -1,6 +1,7 @@
 import pytz
 from datetime import datetime, timedelta
 from rest_framework.authtoken.models import Token
+from django.conf import settings
 
 class MyMiddleware:
     def __init__(self, get_response):
@@ -22,7 +23,7 @@ class MyMiddleware:
             delta = utc_now - created
             print(delta)
 
-            if delta > timedelta(minutes=1):
+            if delta > timedelta(minutes=settings.EXPIRATION_IN_MIN):
                 print("expired!! signout!!")
                 dbToken.delete()
             else:
