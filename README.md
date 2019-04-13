@@ -23,6 +23,8 @@ python3 manage.py runserver
 ## Extend `users` model
 https://stackoverflow.com/questions/44109/extending-the-user-model-with-custom-fields-in-django
 
+## Connection pool  
+By default, the connection pool is off in Django.
 
 # Todo
 ## class based views
