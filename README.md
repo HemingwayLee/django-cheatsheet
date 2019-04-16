@@ -35,5 +35,8 @@ https://stackoverflow.com/questions/14788181/class-based-views-vs-function-based
 
 ## middleware 
 
+## Swagger.io  
+https://editor.swagger.io/
+
 ## limit and offset in Django is different  
 https://stackoverflow.com/questions/24041448/specifying-limit-and-offset-in-django-queryset-wont-work
