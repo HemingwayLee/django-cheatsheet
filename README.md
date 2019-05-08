@@ -23,6 +23,8 @@ python3 manage.py runserver
 ## Extend `users` model
 https://stackoverflow.com/questions/44109/extending-the-user-model-with-custom-fields-in-django
 
+## Connection pool  
+By default, the connection pool is off in Django.
 
 # Todo
 ## class based views
@@ -32,6 +34,9 @@ https://stackoverflow.com/questions/17414622/django-a-good-tutorial-for-class-ba
 https://stackoverflow.com/questions/14788181/class-based-views-vs-function-based-views
 
 ## middleware 
+
+## Swagger.io  
+https://editor.swagger.io/
 
 ## limit and offset in Django is different  
 https://stackoverflow.com/questions/24041448/specifying-limit-and-offset-in-django-queryset-wont-work
