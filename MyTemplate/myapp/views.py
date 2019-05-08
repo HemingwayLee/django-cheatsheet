@@ -12,3 +12,9 @@ def more_template(request):
     users = User.objects.filter(is_staff=True).values()
     ct = { "users": users }
     return render(request, 'hellomore.html', ct)
+
+def base(request):
+    return render(request, 'index.html')
+
+def include(request):
+    return render(request, 'container.html')

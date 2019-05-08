@@ -22,4 +22,6 @@ urlpatterns = [
     path('hello/', views.hello),
     path('context/<str:myname>', views.hello_context),
     path('more/', views.more_template),
+    path('base/', views.base),
+    path('include/', views.include),
 ]
