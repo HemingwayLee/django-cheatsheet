@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+<script>
+  function doSignout() {
+    $.ajax({
+      type: "POST",
+      url: "http://127.0.0.1:8000/signout/",
+      success: function (data) {
+        window.location.href = "http://127.0.0.1:8000/";
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#message').text(`${textStatus}`);
+      },
+    });
+  }
+
+  function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+
+  $(document).ready(function () {
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+        }
+      }
+    });
+
+    $('#signout').on('click', doSignout);
+  });
+</script>
+
+<h2>Hello</h2>
+<button type="button" id="signout" class="btn btn-primary">Sign out</button>
+
+{% endblock %}
