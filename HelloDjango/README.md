@@ -1,5 +1,12 @@
 # Project created by default
 
+## Prerequisite
+```
+virtualenv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+```
+
 ## Create a `HelloDjango` directory in your current directory
 ```
 django-admin startproject HelloDjango
