@@ -5,15 +5,15 @@
 
 ### Django ###
 __pycache__
-migrations
+migrations/
 
 db.sqlite3
 *.log
 *.pyc
-/venv
+venv/
 
 ### IDE ###
-/.vscode
+.vscode/
 
 ### Environment ###
 .env
