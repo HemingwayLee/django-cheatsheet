@@ -24,7 +24,10 @@ python3 manage.py runserver
 https://stackoverflow.com/questions/44109/extending-the-user-model-with-custom-fields-in-django
 
 ## Connection pool  
-By default, the connection pool is off in Django.
+By default, the connection pool is off in Django
+
+## limit and offset in Django is different  
+https://stackoverflow.com/questions/24041448/specifying-limit-and-offset-in-django-queryset-wont-work
 
 # Todo
 ## class based views
@@ -38,5 +41,17 @@ https://stackoverflow.com/questions/14788181/class-based-views-vs-function-based
 ## Swagger.io  
 https://editor.swagger.io/
 
-## limit and offset in Django is different  
-https://stackoverflow.com/questions/24041448/specifying-limit-and-offset-in-django-queryset-wont-work
+## settings
+* setting for server and local
+* knox
+* secret key
+* allowed host
+* cors
+
+## Redis
+
+## Serializer
+
+## Audit Table
+
+
