@@ -98,7 +98,13 @@ auth_user_groups            django_session
 
 # customCmsPage
 * use psql
-* basic login/logout/dashboard functionality with vanilla Django
+* most basic login/logout/dashboard functionality with vanilla Django
+* use `LoginView.as_view`
+
+# formSubmit
+* use sqlite3
+* basic login/logout/dashboard functionality with vanilla Django with better UI
+
 
 
 
