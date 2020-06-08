@@ -30,14 +30,14 @@ def do_signin(request):
         token, _ = Token.objects.get_or_create(user=user)
         return JsonResponse({"token": str(token)}, safe=False, status=200)
     else:
-        print("user not exist... redirect to signin page...")
-        return render(request, 'form_template.html')
+        print("user not exist...")
+        return JsonResponse({}, safe=False, status=404)
 
 @api_view(["GET"])
-# @permission_classes((AllowAny, ))
+@permission_classes((AllowAny, ))
 def hello(request):
-    # if request.user.is_authenticated: 
-    #     return render(request, 'hello.html')
-    # else:
-    #     return render(request, 'form_template.html')
-    return render(request, 'hello.html')
+    if request.user.is_authenticated: 
+        return render(request, 'hello.html')
+    else:
+        return render(request, 'form_template.html')
+
