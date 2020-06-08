@@ -104,7 +104,34 @@ auth_user_groups            django_session
 # formSubmit
 * use sqlite3
 * basic login/logout/dashboard functionality with vanilla Django with better UI
+* use form submit in frontend
+* access control
+```python
+def hello(request):
+    if request.user.is_authenticated: 
+        return render(request, 'hello.html')
+    else:
+        return render(request, 'form_template.html')
+```
 
+
+# cookieBasedAuth
+* use sqlite3
+* use Ajax in frontend
+* access control
+```python
+@require_http_methods(["GET"])
+@login_required(login_url='/signin/')
+def hello(request):
+    return render(request, "hello.html")
+```
+
+* In `settings.py`
+```python
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_AGE = 60
+```
 
 
 
