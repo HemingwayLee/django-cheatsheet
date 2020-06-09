@@ -16,6 +16,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 # Only successful login will invoke the following functions
+#  If we want to hook all request/response, use middleware...
 class CustomLoginView(LoginView):
     def login(self):
         print("inside login")
