@@ -15,7 +15,12 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 
+# Only successful login will invoke the following functions
 class CustomLoginView(LoginView):
+    def login(self):
+        print("inside login")
+        super().login()
+
     def get_response(self):
         print("inside get_response")
 
