@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.middleware import get_user
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
+from django.conf import settings
 from .models import LoginFailedIpTable
 
 class blockerMiddleware:
@@ -48,7 +49,7 @@ class blockerMiddleware:
         # print(timezone.now())
         # print(history.updated)
         # print(timezone.timedelta(minutes=1))
-        if history is not None and history.retry >= 3 and timezone.now() < history.updated + timezone.timedelta(minutes=1):
+        if history is not None and history.retry >= settings.LOGIN_RETRY_TIMES and timezone.now() < history.updated + timezone.timedelta(minutes=settings.LOGIN_WAIT_MINUTES):
             history.retry = 1
             history.save()
             return True
