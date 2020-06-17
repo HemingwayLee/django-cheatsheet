@@ -1,9 +1,10 @@
-Start the server:
+# How to Run
+* Start the server:
 ```
 python3 manage.py runserver
 ```
-
-Process tasks:
+ 
+* Process tasks:
 ```
 python3 manage.py process_tasks
 ```

@@ -1,8 +1,24 @@
-# Get status of Background Tasks
+# Background Tasks
+## Install
+```
+pip3 install django-background-tasks
+```
+
+It should be `django-background-tasks` not `django-background-task`  
+
+# Sample code
+## backgroundTasks
+* The most basic background task example
+
+## uploadFile
+* UI and upload functionality
+
+# Others
+## Get status of Background Tasks
 
 https://stackoverflow.com/questions/46766939/getting-status-of-task-from-django-background-tasks
 
-# Run multiple Background Tasks
+## Run multiple Background Tasks
 
 ```python
 @background(queue='my-queue')
