@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.core.files.storage import FileSystemStorage
 from .task import uploadInBackground
-
+from .models import MyTask
 
 @require_http_methods(["GET"])
 def upload(request):
@@ -20,6 +20,14 @@ def do_upload(request):
         fss = FileSystemStorage()
         filename = fss.save(uploadedFile.name, uploadedFile)
         uploadInBackground(filename)
-        return render(request, 'upload.html', {'filename': filename})
+        return JsonResponse({'filename': filename, 'status': 0})
+    else:
+        return JsonResponse({'filename': None, 'status': None }, status=400)
 
-    return render(request, 'upload.html')
+@require_http_methods(["GET"])
+def get_status(request, filename):
+    task = MyTask.objects.filter(filename=filename).first()
+    if task is None:
+        return JsonResponse({"status": None})
+    else:
+        return JsonResponse({"status": task.status})

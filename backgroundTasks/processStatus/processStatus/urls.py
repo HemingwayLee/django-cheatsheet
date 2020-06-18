@@ -22,4 +22,5 @@ urlpatterns = [
     path('page/upload/', views.upload),
     path('page/dashboard/', views.dashboard),
     path('upload/', views.do_upload),
+    path('status/<str:filename>/', views.get_status),
 ]

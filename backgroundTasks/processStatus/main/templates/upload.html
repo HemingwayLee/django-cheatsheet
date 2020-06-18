@@ -2,9 +2,37 @@
 
 {% block content %}
 
+<script>
+  function doSubmit(e) {
+    e.preventDefault();
+
+    $.ajax({
+      type: "POST",
+      url: "http://127.0.0.1:8000/upload/",
+      // data: $(this).serialize(), // this is for normal form submit
+      data: new FormData($("#uploadForm")[0]),
+      // we need them for form data
+      contentType: false, 
+      cache: false,
+      processData: false,
+      // 
+      success: function (data) {
+        $("#msg").text("File uploaded successfully: ");
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+      },
+    });
+  }
+
+  $(document).ready(function () {
+    $('#uploadForm').submit(doSubmit);
+  });
+</script>
+
 <div class="row">
   <div class="col-md-12">
-    <form action="http://127.0.0.1:8000/upload/" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-group">
         <div class="custom-file">
@@ -21,9 +49,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    {% if filename %}
-      <p>File uploaded successfully: {{ filename }}</p>
-    {% endif %}
+    <p id="msg"></p>
   </div>
 </div>
 
