@@ -16,7 +16,7 @@
         window.location.href = "http://127.0.0.1:8000/";
       },
       error: function (xhr, textStatus, errorThrown) {
-        $('#message').text(`${textStatus}`);
+        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
       },
     });
   }
