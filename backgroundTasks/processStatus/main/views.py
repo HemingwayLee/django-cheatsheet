@@ -19,15 +19,17 @@ def do_upload(request):
     if uploadedFile:
         fss = FileSystemStorage()
         filename = fss.save(uploadedFile.name, uploadedFile)
+        
+        status = 0
+        task = MyTask(filename = filename, status = status)
+        task.save()
+        
         uploadInBackground(filename)
-        return JsonResponse({'filename': filename, 'status': 0})
+        return JsonResponse({'filename': filename, 'status': status})
     else:
         return JsonResponse({'filename': None, 'status': None }, status=400)
 
 @require_http_methods(["GET"])
-def get_status(request, filename):
-    task = MyTask.objects.filter(filename=filename).first()
-    if task is None:
-        return JsonResponse({"status": None})
-    else:
-        return JsonResponse({"status": task.status})
+def get_status(request):
+    return JsonResponse(list(MyTask.objects.all().values()), safe=False)
+
