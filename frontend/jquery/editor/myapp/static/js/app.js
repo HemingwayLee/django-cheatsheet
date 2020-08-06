@@ -465,10 +465,12 @@ $(document).ready(function(){
         content: content
       }),
       success: function(data) {
-        $('#ans').text(data.msg);
+        $("#msgBody").text(data.msg);
+        $("#msgModal").modal("show");
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
-        $('#ans').text(`${textStatus}`);
+        $("#msgBody").text(`${textStatus}`);
+        $("#msgModal").modal("show");
       },
     });
   });
