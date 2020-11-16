@@ -21,4 +21,5 @@ urlpatterns = [
     path('show/', views.show),
     path('admin/', admin.site.urls),
     path('media/', views.get_media),
+    path('cssjs/', views.use_css_js),
 ]

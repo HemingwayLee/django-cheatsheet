@@ -5,6 +5,9 @@ from django.http import HttpResponse
 def show(request):
   return render(request, 'hello.html')
 
+def use_css_js(request):
+  return render(request, 'cssjs.html')
+
 def get_media(request):
   print(settings.MEDIA_ROOT)
 
