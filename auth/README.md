@@ -1,6 +1,6 @@
 # DefaultUser
 * use sqlite3
-* show table structure by a raw SQL query
+* show default `auth_user` table schema (and data) by a raw SQL query
 
 ```
 sqlite> .tables
@@ -29,7 +29,7 @@ auth_user_groups            django_session
 
 # RewriteUser
 * use psql
-* rewrite user model and show it by a raw SQL query
+* rewrite `user model` (it is `main_myuser` in this example) and show it by a raw SQL query
 
 ```
                  List of relations
@@ -60,7 +60,7 @@ auth_user_groups            django_session
 
 # ExtendUser
 * use psql
-* extend user model and show it by a raw SQL query
+* extend `user model` (it is `main_myuser` in this example) with a new column `age` and show it by a raw SQL query
 
 ```
                     List of relations
@@ -96,10 +96,6 @@ auth_user_groups            django_session
 }]
 ```
 
-# customCmsPage
-* use psql
-* most basic login/logout/dashboard functionality with vanilla Django
-* use `LoginView.as_view`
 
 # formSubmit
 * use sqlite3
@@ -114,10 +110,16 @@ def hello(request):
         return render(request, 'form_template.html')
 ```
 
+# customCmsPage
+* use psql
+* most basic login/logout/dashboard functionality with vanilla Django
+* use `LoginView.as_view`
+* the `admin` page is not accessible by removing `admin/` from `url.py` 
+
 
 # cookieBasedAuth
 * use sqlite3
-* use Ajax in frontend
+* use jQuery/Bootstarp/Django base template in frontend
 * access control
 ```python
 @require_http_methods(["GET"])
@@ -133,8 +135,10 @@ SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 60
 ```
 
+# loginLimit
+* use sqlite3
+* use django-axes
 
-
-
-
+# djangoRest
+## helloDjangoRest
 
