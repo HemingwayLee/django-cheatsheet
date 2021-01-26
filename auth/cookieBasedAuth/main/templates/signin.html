@@ -35,18 +35,17 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="signinTitle" class="modal-title">Modal Header</h4>
+        <h4 id="signinTitle" class="modal-title">Signin</h4>
       </div>
       <div class="modal-body">
-        <h2>Signin</h2>
-        <hr>
         <form id="loginform" method="post">
           {% csrf_token %}
           <label for="account">Account:</label>
           <input name="account" id="account" style="width:100%;"></input>
           <label for="password">Password:</label>
           <input type="password" name="password" id="password" style="width:100%;"></input>
-          <input type="submit" id="signin" value="login"></input>
+          <hr>
+          <input class="btn btn-primary" type="submit" id="signin" value="login"></input>
         </form>
       </div>
     </div>
