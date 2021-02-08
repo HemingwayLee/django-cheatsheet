@@ -18,6 +18,7 @@ from django.urls import path
 from main import views
 
 urlpatterns = [
+    path('', views.upload),
     path('admin/', admin.site.urls),
     path('page/upload/', views.upload),
     path('page/dashboard/', views.dashboard),

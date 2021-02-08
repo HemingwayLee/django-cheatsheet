@@ -38,12 +38,13 @@
       type: "GET",
       url: "http://127.0.0.1:8000/status/",
       success: function (data) {
-        // console.log(data);
+        console.log(data);
         $('#history tbody').empty();
         $.each(data, function(i, task) {
           $('<tr>').append(
             $('<td>').text(task.filename),
             $('<td>').text(statusDict[task.status]),
+            $('<td>').text(new Date(task.created_at)),
           ).appendTo("#history tbody");
         });
       },
@@ -60,35 +61,45 @@
   });
 </script>
 
-<div class="row">
-  <div class="col-md-12">
-    <form id="uploadForm" method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="form-group">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="customFile" name="myfile"></input>
-          <label class="custom-file-label" for="customFile"></label>
-        </div>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Upload</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-    <p id="msg"></p>
+<div class="container">
+  <div class="jumbotron mt-3">
+    <h2>Runing Tasks in Background</h2>
     <hr>
-    <table class="table table-striped" id="history">
-      <thead>
-        <tr><td>Filename</td><td>Status</td></tr>
-      </thead>
-      <tbody>
-      </tbody>
-    </table>
+    <div>
+      There will be always 2 background tasks running no matter how many files updated into the system
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <hr>
+        <form id="uploadForm" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" id="customFile" name="myfile"></input>
+              <label class="custom-file-label" for="customFile"></label>
+            </div>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <p id="msg"></p>
+        <hr>
+        <table class="table table-striped" id="history">
+          <thead>
+            <tr><td>Filename</td><td>Status</td><td>Created</td></tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
-
 {% endblock %}
