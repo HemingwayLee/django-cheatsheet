@@ -111,6 +111,8 @@ def hello(request):
     else:
         return render(request, 'form_template.html')
 ```
+* By default, it will have a `sessionid` in `cookie`
+![formsubmit3](images/formsubmit3.png)
 
 # customCmsPage
 ![customCmsPage1](images/customcmspage1.png)
