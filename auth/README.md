@@ -122,6 +122,8 @@ def hello(request):
 
 
 # cookieBasedAuth
+![cookiebasedauth1](images/cookiebasedauth1.png)
+![cookiebasedauth2](images/cookiebasedauth2.png)
 * use sqlite3
 * use jQuery/Bootstarp/Django base template in frontend
 * access control
