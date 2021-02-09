@@ -111,6 +111,16 @@ def hello(request):
     else:
         return render(request, 'form_template.html')
 ```
+* Redirect in the backend
+```python
+    if user is not None and user.is_active:
+        print("Successful, redirect to hello...")
+        auth.login(request, user)
+        return HttpResponseRedirect('/hello/')
+    else:
+        print("user not exist... redirect to signin page...")
+        return render(request, 'form_template.html')
+```
 * By default, it will have a `sessionid` in `cookies` after login
 ![formsubmit3](images/formsubmit3.png)
 
@@ -134,6 +144,23 @@ def hello(request):
 @login_required(login_url='/signin/')
 def hello(request):
     return render(request, "hello.html")
+```
+* Redirect in the frontend
+```javascript
+$.ajax({
+  type: "POST",
+  url: "http://127.0.0.1:8000/dosignin/",
+  data: $(this).serialize(),
+  success: function (data) {
+    $("#signinModal").modal("hide");
+
+    // by default, it will have a sessionid in cookies
+    window.location.href = "http://127.0.0.1:8000/";
+  },
+  error: function (xhr, textStatus, errorThrown) {
+    $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+  },
+});
 ```
 * In the backend, it is basic the same as `formSubmit` project
 
