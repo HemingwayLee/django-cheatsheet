@@ -42,6 +42,7 @@ def doSignin(request):
 # This will return HTTP/1.1" 302
 # @login_required
 def hello(request):
+    print(request.user.is_authenticated)
     if request.user.is_authenticated: 
         return render(request, 'hello.html')
     else:
