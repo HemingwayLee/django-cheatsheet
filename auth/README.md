@@ -111,8 +111,8 @@ def hello(request):
 ```
 
 # customCmsPage
-![customCmsPage1](imagescustomcmspage1.png)
-![customCmsPage1](imagescustomcmspage2.png)
+![customCmsPage1](images/customcmspage1.png)
+![customCmsPage1](images/customcmspage2.png)
 * use psql
 * most basic login/logout/dashboard functionality with vanilla Django
 * use `LoginView.as_view`
