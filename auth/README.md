@@ -98,6 +98,8 @@ auth_user_groups            django_session
 
 
 # formSubmit
+![formsubmit1](images/formsubmit1.png)
+![formsubmit2](images/formsubmit2.png)
 * use sqlite3
 * basic login/logout/dashboard functionality with vanilla Django with better UI
 * use form submit in frontend
