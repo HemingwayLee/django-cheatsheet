@@ -111,7 +111,7 @@ def hello(request):
     else:
         return render(request, 'form_template.html')
 ```
-* By default, it will have a `sessionid` in `cookie`
+* By default, it will have a `sessionid` in `cookies` after login
 ![formsubmit3](images/formsubmit3.png)
 
 # customCmsPage
@@ -135,13 +135,20 @@ def hello(request):
 def hello(request):
     return render(request, "hello.html")
 ```
+* In the backend, it is basic the same as `formSubmit` project
 
-* In `settings.py`
+* In `settings.py`, a cookie with the HttpOnly attribute is inaccessible to the JavaScript Document
 ```python
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_AGE = 60
 ```
+
+* It will have a `sessionid` in `cookies` after login
+![cookiebasedauth3](images/cookiebasedauth1.png)
+
+* It the `sessionid` will expired after 60 seconds
+![cookiebasedauth4](images/cookiebasedauth2.png)
 
 # loginLimit
 * use sqlite3
