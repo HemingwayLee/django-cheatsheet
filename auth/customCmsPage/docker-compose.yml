@@ -18,6 +18,7 @@ services:
       POSTGRES_HOST: mydb
       POSTGRES_PORT: 5432
       POSTGRES_DB_NAME: abc
+      PYTHONUNBUFFERED: 1
     ports:
       - "8000:8000"
     depends_on:
