@@ -9,7 +9,7 @@ class MyMiddleware:
 
     def __call__(self, request):
         token = request.META.get('HTTP_AUTHORIZATION', None)
-        # print(token)
+        print(f"my token is {token} !!!")
         
         if token is not None:
             dbToken = Token.objects.filter(key=token.split(" ")[1])
