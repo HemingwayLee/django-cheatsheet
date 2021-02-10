@@ -49,10 +49,6 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
 ]
 
-# not the right way
-# AUTH_USER_MODEL = "main.models.MyUser"
-AUTH_USER_MODEL = "main.MyUser"
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -68,7 +64,7 @@ ROOT_URLCONF = 'cms.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "main", "templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -136,3 +132,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+# a cookie with the HttpOnly attribute is inaccessible to the JavaScript Document
+SESSION_COOKIE_HTTPONLY = True
+
+# The age of session cookies, in seconds
+# It will logout automatically, after 60 seconds
+SESSION_COOKIE_AGE = 60
+

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<script>
+  function doSubmit(e) {
+    e.preventDefault();
+
+    $.ajax({
+      type: "POST",
+      url: "http://127.0.0.1:8000/dosignin/",
+      data: $(this).serialize(),
+      success: function (data) {
+        $("#signinModal").modal("hide");
+
+        // by default, it will have a sessionid in cookies
+        window.location.href = "http://127.0.0.1:8000/";
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+      },
+    });
+  }
+
+  $(document).ready(function () {
+    $("#signinModal").modal({
+      backdrop: 'static',
+      keyboard: false
+    });
+
+    $('#loginform').submit(doSubmit);
+  });
+</script>
+
+<div class="modal fade" id="signinModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="signinTitle" class="modal-title">Signin</h4>
+      </div>
+      <div class="modal-body">
+        <form id="loginform" method="post">
+          {% csrf_token %}
+          <label for="account">Account:</label>
+          <input name="account" id="account" style="width:100%;"></input>
+          <label for="password">Password:</label>
+          <input type="password" name="password" id="password" style="width:100%;"></input>
+          <hr>
+          <input class="btn btn-primary" type="submit" id="signin" value="login"></input>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
