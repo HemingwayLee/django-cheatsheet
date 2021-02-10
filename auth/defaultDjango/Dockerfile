@@ -7,4 +7,7 @@ WORKDIR /home/proj
 COPY . .
 
 RUN pip3 install -r requirements.txt
-
+RUN python3 manage.py migrate
+RUN /home/proj/scripts/create_superuser.sh
+RUN /home/proj/scripts/create_stuff.sh
+RUN /home/proj/scripts/create_client.sh
