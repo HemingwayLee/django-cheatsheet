@@ -30,6 +30,8 @@
       }
     });
 
+    console.log(document.cookie);
+
     $('#signout').on('click', doSignout);
   });
 </script>
@@ -41,7 +43,7 @@
         <!-- <div id="my-photo" class="my_photo">
           <img src="me.png" class="img-circle me">
         </div> -->
-        <h3><b id="accountname"></b></h3>
+        <h3 style="text-align: center"><b>{{ACCOUNTNAME}}</b></h3>
         <li class="active">
           <a href="#"><i class="glyphicon glyphicon-th"></i> Dashboard</a>
         </li>

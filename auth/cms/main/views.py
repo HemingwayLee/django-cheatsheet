@@ -10,7 +10,9 @@ from django.views.decorators.http import require_http_methods
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
 def hello(request):
-    return render(request, "hello.html")
+    return render(request, "hello.html", {
+        "ACCOUNTNAME": request.user
+    })
 
 @require_http_methods(["GET"])
 def signin(request):
