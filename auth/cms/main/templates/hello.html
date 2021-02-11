@@ -34,7 +34,35 @@
   });
 </script>
 
-<h2>Hello</h2>
-<button type="button" id="signout" class="btn btn-primary">Sign out</button>
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <ul class="nav nav-pills nav-stacked">
+        <!-- <div id="my-photo" class="my_photo">
+          <img src="me.png" class="img-circle me">
+        </div> -->
+        <h3><b id="accountname"></b></h3>
+        <li class="active">
+          <a href="#"><i class="glyphicon glyphicon-th"></i> Dashboard</a>
+        </li>
+        <li>
+          <a href="#"><i class="glyphicon glyphicon-user"></i> Account</a>
+        </li>
+        <li>
+          <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Course</a>
+        </li>
+        <li>
+          <a href="#"><i class="glyphicon glyphicon-picture"></i> Visualization</a>
+        </li>
+        <li>
+          <a id="signout" href="#"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-9">
+      <h2>Hello</h2>     
+    </div>
+  </div>
+</div>
 
 {% endblock %}

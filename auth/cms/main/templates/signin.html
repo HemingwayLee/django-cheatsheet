@@ -17,7 +17,12 @@
         window.location.href = "http://127.0.0.1:8000/";
       },
       error: function (xhr, textStatus, errorThrown) {
-        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+        if (xhr.status == 404) {
+          $('#message').text("Invalid account or password");
+        } else {
+          $('#message').text("Internal server error");
+        }
+        $("#message").show();
       },
     });
   }
@@ -42,11 +47,14 @@
         <form id="loginform" method="post">
           {% csrf_token %}
           <label for="account">Account:</label>
-          <input name="account" id="account" style="width:100%;"></input>
+          <input name="account" id="account" style="width:100%;" oninput="$('#message').hide();"></input>
           <label for="password">Password:</label>
-          <input type="password" name="password" id="password" style="width:100%;"></input>
+          <input type="password" name="password" id="password" style="width:100%;" oninput="$('#message').hide();"></input>
+          <div style="color: red" id="message"></div>
           <hr>
-          <input class="btn btn-primary" type="submit" id="signin" value="login"></input>
+          <button class="btn btn-primary" type="submit" id="signin">
+            <i class="glyphicon glyphicon-log-out"></i> Login
+          </button>
         </form>
       </div>
     </div>

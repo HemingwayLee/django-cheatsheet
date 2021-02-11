@@ -19,7 +19,9 @@ def signin(request):
 @require_http_methods(["POST"])
 def dosignin(request):
     try:
-        user = authenticate(username=request.POST["account"], password=request.POST["password"])
+        user = authenticate(
+            username=request.POST["account"], 
+            password=request.POST["password"])
         if not user:
             return HttpResponse(status=404)
 
