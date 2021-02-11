@@ -13,6 +13,7 @@ services:
       dockerfile: Dockerfile
     command: /home/proj/scripts/init.sh
     environment:
+      WEBADDRESS: 127.0.0.1
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
       POSTGRES_HOST: mydb

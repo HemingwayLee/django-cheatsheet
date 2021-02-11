@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<div class="container-fluid">
+  <div class="row content">
+    {% include "side.html" %}
+    <div class="col-sm-9">
+      <h2>Dashboard</h2>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
