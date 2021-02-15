@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  myweb:
+    build: .
+    command: python3 /home/proj/manage.py runserver 0.0.0.0:8000
+    environment:
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "8000:8000"
+  prom:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    # command: 
+    # environment:
+    ports:
+      - "9090:9090"
+    depends_on:
+      - myweb
