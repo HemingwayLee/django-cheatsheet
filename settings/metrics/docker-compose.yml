@@ -15,8 +15,9 @@ services:
       - ./consoles/:/home/
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '--web.console.templates=/home/'
+      - '--web.console.templates=/home'
     ports:
       - "9090:9090"
     depends_on:
