@@ -20,5 +20,8 @@ from main import views
 
 urlpatterns = [
     path('', views.hello),
+    path('hello/', views.hello),
+    path('hi/', views.hi),
+    path('hola/', views.hola),
     url('', include('django_prometheus.urls')),
 ]
