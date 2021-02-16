@@ -3,16 +3,23 @@ import random
 from django.shortcuts import render
 from django.http import HttpResponse
 
+def __dummy(num):
+    sum = 0
+    for i in range(num):
+        sum += random.randint(0, 1000)
+
+    return sum
+
 def hello(request):
-    time.sleep(random.randint(0, 5))
-    return HttpResponse("hello")
+    sum = __dummy(random.randint(2000, 3000))
+    return HttpResponse(f"hello, {sum}")
 
 def hi(request):
-    time.sleep(random.randint(2, 7))
-    return HttpResponse("hello")
+    sum = __dummy(random.randint(2200, 3500))
+    return HttpResponse(f"hi, {sum}")
 
 def hola(request):
-    time.sleep(random.randint(4, 9))
-    return HttpResponse("hola")
+    sum = __dummy(random.randint(2400, 4000))
+    return HttpResponse(f"hola, {sum}")
 
 
