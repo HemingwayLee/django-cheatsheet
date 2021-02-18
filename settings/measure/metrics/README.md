@@ -12,6 +12,13 @@ docker-compose up
 docker exec -it {container_id} /bin/sh
 ```
 
+# what to add
+![method count](images/method_count.png)
+```
+django_http_requests_latency_seconds_by_view_method_count
+```
+
+
 
 # Ref
 * [django prometheus](https://github.com/korfuri/django-prometheus)
