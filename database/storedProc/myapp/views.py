@@ -1,38 +1,44 @@
+import uuid
+import random
+import decimal
+from time import sleep
 from django.http import HttpResponse
 from django.db import connection
 from .models import Person
 
 def insert(request):
-  p = Person(fname="James", lname="Lee", age=26)
-  p.save()
-  p = Person(fname="Kenny", lname="Lee", age=28)
-  p.save()
-  p = Person(fname="Kristof", lname="Lee", age=25)
-  p.save()
+    for i in range(random.randint(10, 50)):
+        sleep(decimal.Decimal(random.randrange(50, 300))/1000)
 
-  return HttpResponse("Created!!")
+        p = Person(
+            fname=uuid.uuid4().hex[:16], 
+            lname=uuid.uuid4().hex[:16], 
+            age=random.randint(10, 60))
+        p.save()
+
+    return HttpResponse("Created!!")
 
 def show1(request):
-  with connection.cursor() as cursor:
-    cursor.execute("SELECT * FROM person_info;")
-    data = cursor.fetchall()
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM person_info;")
+        data = cursor.fetchall()
 
-  output = ""
-  for p in data:
-    output += str(p[0]) + " " + p[1] + " " + p[2] + "<br>"
+    output = ""
+    for p in data:
+      output += str(p[0]) + " " + p[1] + " " + p[2] + "<br>"
 
-  return HttpResponse(output)
+    return HttpResponse(output)
 
 
 def show2(request):
-  with connection.cursor() as cursor:
-    # `person_info` is view, callproc does not work
-    # cursor.callproc("person_info")
-    cursor.callproc("my_func") 
-    data = cursor.fetchall()
+    with connection.cursor() as cursor:
+        # `person_info` is view, callproc does not work
+        # cursor.callproc("person_info")
+        cursor.callproc("my_func") 
+        data = cursor.fetchall()
 
-  output = ""
-  for p in data:
-    output += str(p[0]) + " " + p[1] + " " + p[2] + "<br>"
+    output = ""
+    for p in data:
+        output += str(p[0]) + " " + p[1] + " " + p[2] + "<br>"
 
-  return HttpResponse(output)
+    return HttpResponse(output)

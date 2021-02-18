@@ -18,3 +18,15 @@ POSTGRES_HOST=127.0.0.1
 POSTGRES_PORT=5432
 ```
 
+# Test it with `grafana`
+```
+docker-compose build
+docker-compose up
+```
+
+* Access `127.0.0.1:3000`
+  * default account/pwd is `admin/admin`
+  * Add postgres connection with `mydb:5432`
+  * Add postgres to panel
+  * Create queries
+
