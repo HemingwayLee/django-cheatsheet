@@ -9,10 +9,11 @@
   <script>
     $(document).ready(function() {
       $('#hello').on('click', function() {
+        const url = window.location.protocol + "//" + window.location.host + '/hello'
         $.ajax({
           type: 'GET',
           dataType: 'json',
-          url: `http://${window.location.hostname}:8000/hello`,
+          url: url,
           success: function(data) {
             const jsonPretty = JSON.stringify(data, null, '\t');
             $("#res").text(jsonPretty);
@@ -24,6 +25,7 @@
       });
 
       $('#hellopost').on('click', function() {
+        const url = window.location.protocol + "//" + window.location.host + '/hellopost'
         $.ajax({
           type: 'POST',
           dataType: 'json',
@@ -32,7 +34,7 @@
           data: JSON.stringify({
             name: "ywlee",
           }),
-          url: `http://${window.location.hostname}:8000/hellopost`,
+          url: url,
           success: function(data) {
             const jsonPretty = JSON.stringify(data, null, '\t');
             $("#res").text(jsonPretty);
