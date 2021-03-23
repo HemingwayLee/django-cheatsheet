@@ -6,15 +6,18 @@
   function doSubmit(e) {
     e.preventDefault();
 
+    const urlTarget = window.location.protocol + "//" + window.location.host + '/dosignin/';
+    const urlRedirect = window.location.protocol + "//" + window.location.host + '/';
+    
     $.ajax({
       type: "POST",
-      url: "http://{{WEBADDRESS}}:8000/dosignin/",
+      url: urlTarget,
       data: $(this).serialize(),
       success: function (data) {
         $("#signinModal").modal("hide");
 
         // by default, it will have a sessionid in cookies
-        window.location.href = "http://{{WEBADDRESS}}:8000/";
+        window.location.href = urlRedirect;
       },
       error: function (xhr, textStatus, errorThrown) {
         if (xhr.status == 404) {

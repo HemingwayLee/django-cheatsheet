@@ -6,14 +6,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from dotenv import load_dotenv
 
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
 def dashboard(request):
-    load_dotenv("./cms/.env")
     return render(request, "dashbaord.html", {
-        "WEBADDRESS": os.environ.get("WEBADDRESS"),
         "ACCOUNTNAME": request.user,
         "PAGEID": "dashboard"
     })
@@ -21,9 +18,7 @@ def dashboard(request):
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
 def account(request):
-    load_dotenv("./cms/.env")
     return render(request, "account.html", {
-        "WEBADDRESS": os.environ.get("WEBADDRESS"),
         "ACCOUNTNAME": request.user,
         "PAGEID": "account"
     })
@@ -31,9 +26,7 @@ def account(request):
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
 def course(request):
-    load_dotenv("./cms/.env")
     return render(request, "course.html", {
-        "WEBADDRESS": os.environ.get("WEBADDRESS"),
         "ACCOUNTNAME": request.user,
         "PAGEID": "course"
     })
@@ -41,16 +34,13 @@ def course(request):
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
 def visualization(request):
-    load_dotenv("./cms/.env")
     return render(request, "visualization.html", {
-        "WEBADDRESS": os.environ.get("WEBADDRESS"),
         "ACCOUNTNAME": request.user,
         "PAGEID": "visualization"
     })
 
 @require_http_methods(["GET"])
 def signin(request):
-    load_dotenv("./cms/.env")
     return render(request, "signin.html", {
         "WEBADDRESS": os.environ.get("WEBADDRESS")
     })

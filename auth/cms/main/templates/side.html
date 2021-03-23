@@ -1,10 +1,12 @@
 <script>
   function doSignout() {
+    const urlTarget = window.location.protocol + "//" + window.location.host + '/signout/';
+    const urlRedirect = window.location.protocol + "//" + window.location.host + '/';
     $.ajax({
       type: "POST",
-      url: "http://{{WEBADDRESS}}:8000/signout/",
+      url: urlTarget,
       success: function (data) {
-        window.location.href = "http://{{WEBADDRESS}}:8000/";
+        window.location.href = urlRedirect;
       },
       error: function (xhr, textStatus, errorThrown) {
         $('#message').text(`${textStatus}`);
@@ -35,17 +37,17 @@
       <img src="me.png" class="img-circle me">
     </div> -->
     <h3 style="text-align: center"><b>{{ACCOUNTNAME}}</b></h3>
-    <li id="dashboard">
-      <a href="http://{{WEBADDRESS}}:8000/dashboard/"><i class="glyphicon glyphicon-th"></i> Dashboard</a>
+    <li>
+      <a id="dashboard" href="#"><i class="glyphicon glyphicon-th"></i> Dashboard</a>
     </li>
-    <li id="account">
-      <a href="http://{{WEBADDRESS}}:8000/account/"><i class="glyphicon glyphicon-user"></i> Account</a>
+    <li>
+      <a id="account" href="#"><i class="glyphicon glyphicon-user"></i> Account</a>
     </li>
-    <li id="course">
-      <a href="http://{{WEBADDRESS}}:8000/course/"><i class="glyphicon glyphicon-list-alt"></i> Course</a>
+    <li>
+      <a id="course" href="#"><i class="glyphicon glyphicon-list-alt"></i> Course</a>
     </li>
-    <li id="visualization">
-      <a href="http://{{WEBADDRESS}}:8000/visualization/"><i class="glyphicon glyphicon-picture"></i> Visualization</a>
+    <li>
+      <a id="visualization" href="#"><i class="glyphicon glyphicon-picture"></i> Visualization</a>
     </li>
     <li>
       <a id="signout" href="#"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
@@ -55,4 +57,16 @@
 <script>
   const pageId = "{{PAGEID}}";
   $(`#${pageId}`).addClass("active");
+
+  const urlDashboard = window.location.protocol + "//" + window.location.host + '/dashboard/';
+  document.getElementById("dashboard").setAttribute("href", urlDashboard);
+
+  const urlAccount = window.location.protocol + "//" + window.location.host + '/account/';
+  document.getElementById("account").setAttribute("href", urlAccount);
+
+  const urlCourse = window.location.protocol + "//" + window.location.host + '/course/';
+  document.getElementById("course").setAttribute("href", urlCourse);
+
+  const urlVisualization = window.location.protocol + "//" + window.location.host + '/visualization/';
+  document.getElementById("visualization").setAttribute("href", urlVisualization)
 </script>
