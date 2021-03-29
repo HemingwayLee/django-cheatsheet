@@ -1,0 +1,75 @@
+<script>
+  function doSignout() {
+    const urlTarget = window.location.protocol + "//" + window.location.host + '/signout/';
+    const urlRedirect = window.location.protocol + "//" + window.location.host + '/';
+    $.ajax({
+      type: "POST",
+      url: urlTarget,
+      success: function (data) {
+        window.location.href = urlRedirect;
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#message').text(`${textStatus}`);
+      },
+    });
+  }
+
+  function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+
+  $(document).ready(function () {
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+        }
+      }
+    });
+
+    $('#signout').on('click', doSignout);
+  });
+</script>
+
+<div class="col-sm-3 sidenav">
+  <ul class="nav nav-pills nav-stacked">
+    {% if ACCOUNTNAME.is_staff %}
+      <h3 style="text-align: center; color: red;"><b>{{ACCOUNTNAME}}</b></h3>
+      <li id="admin">
+        <a href="#"><i class="glyphicon glyphicon-th"></i> Admin</a>
+      </li>
+      <li id="visualization">
+        <a href="#"><i class="glyphicon glyphicon-picture"></i> Visualization</a>
+      </li>
+    {% else %}
+      <h3 style="text-align: center; color: green;"><b>{{ACCOUNTNAME}}</b></h3>
+      <li id="client">
+        <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Client</a>
+      </li>
+    {% endif %}
+    <li id="signout">
+      <a href="#"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
+    </li>
+  </ul>
+</div>
+<script>
+  const pageId = "{{PAGEID}}";
+  $(`#${pageId}`).addClass("active");
+
+  if (document.getElementById("admin")) {
+    const urlAdmin = window.location.protocol + "//" + window.location.host + '/myadmin/';
+    document.getElementById("admin").firstElementChild.setAttribute("href", urlAdmin);
+  }
+
+  if (document.getElementById("client")) {
+    const urlClient = window.location.protocol + "//" + window.location.host + '/client/';
+    document.getElementById("client").firstElementChild.setAttribute("href", urlClient);
+  }
+
+  if (document.getElementById("visualization")) {
+    const urlVisualization = window.location.protocol + "//" + window.location.host + '/visualization/';
+    document.getElementById("visualization").firstElementChild.setAttribute("href", urlVisualization)
+  }
+</script>
+
+
