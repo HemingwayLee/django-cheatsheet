@@ -41,9 +41,7 @@ def visualization(request):
 
 @require_http_methods(["GET"])
 def signin(request):
-    return render(request, "signin.html", {
-        "WEBADDRESS": os.environ.get("WEBADDRESS")
-    })
+    return render(request, "signin.html")
 
 @require_http_methods(["POST"])
 def dosignin(request):
