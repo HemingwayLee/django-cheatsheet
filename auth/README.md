@@ -159,3 +159,38 @@ SESSION_COOKIE_AGE = 60
 # djangoRest
 ## helloDjangoRest
 
+# cms
+* psql
+* frontend routing 
+* bootstrap template
+
+# multiLevelUser
+* psql
+* frontend routing 
+* bootstrap template
+* 404 page
+
+* use `staff_member_required`
+```python
+@require_http_methods(["GET"])
+@login_required(login_url='/signin/')
+@staff_member_required(login_url='/notfound/')
+def visualization(request):
+    return render(request, "visualization.html", {
+        "ACCOUNTNAME": request.user,
+        "PAGEID": "visualization"
+    })
+```
+
+* login decision
+```python
+@require_http_methods(["GET"])
+@login_required(login_url='/signin/')
+def index(request):
+    if request.user.is_staff:
+        return redirect('/myadmin/')
+    else:
+        return redirect('/client/')
+```
+
+

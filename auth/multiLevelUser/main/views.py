@@ -12,8 +12,6 @@ from django.contrib.admin.views.decorators import staff_member_required
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
 def index(request):
-    print("index")
-    print(request.user.is_staff)
     if request.user.is_staff:
         return redirect('/myadmin/')
     else:
@@ -47,9 +45,7 @@ def visualization(request):
 
 @require_http_methods(["GET"])
 def signin(request):
-    return render(request, "signin.html", {
-        "WEBADDRESS": os.environ.get("WEBADDRESS")
-    })
+    return render(request, "signin.html")
 
 @require_http_methods(["POST"])
 def dosignin(request):
