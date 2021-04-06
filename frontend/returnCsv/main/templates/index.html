@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+<script>
+  function getCsvFromResponse() {
+    const urlTarget = window.location.protocol + "//" + window.location.host + `/csv/response/`;
+
+    $.ajax({
+      type: "GET",
+      url: urlTarget,
+      success: function (data) {
+        console.log(data);
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+      },
+    });
+  }
+
+  function getCsvFromStatic() {
+    const urlTarget = window.location.protocol + "//" + window.location.host + `/static/iris.csv`;
+
+    $.ajax({
+      type: "GET",
+      url: urlTarget,
+      success: function (data) {
+        console.log(data);
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#msg').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+      },
+    });
+  }
+</script>
+
+<div id="msg"></div>
+<h2>Hello CSV</h2>
+<button onclick="getCsvFromResponse();" class="btn btn-primary">Response Csv</button>
+<button onclick="getCsvFromStatic();" class="btn btn-primary">Static Csv</button>
+
+{% endblock %}
