@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+
+{% load static %}
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-12">
+      <h2 align="center">Show Result</h2>
+      <div id="dest">
+      </div>
+      <!-- <table id="allFiles" class="table table-striped">
+        <thead>
+          <tr>
+            <td></td>
+            <td>Filename</td>
+            <td>Size</td>
+            <td>Crawling Time</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table> -->
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+<script>
+  const res = {{ result|safe }};
+  console.log(res);
+
+  const targetElement = document.getElementById('dest');
+  const configuration = { drawFileList: true, matching: 'lines' };
+
+  const diff2htmlUi = new Diff2HtmlUI(targetElement, res, configuration);
+  // or
+  // const diff2htmlUi = new Diff2HtmlUI(targetElement, diffJson, configuration);
+  diff2htmlUi.draw();
+
+</script>
+
+{% endblock %}
