@@ -20,4 +20,5 @@ from main import views
 urlpatterns = [
     path('api/admin/', admin.site.urls),
     path('api/', views.hello),
+    path('api/sbs/', views.side_by_side),
 ]
