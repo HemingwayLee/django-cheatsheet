@@ -13,6 +13,8 @@ services:
       dockerfile: Dockerfile
     command: /home/proj/scripts/init.sh
     environment:
+      DJANGO_USER: root
+      DJANGO_PASS: rootroot
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
       POSTGRES_HOST: mydb
@@ -26,3 +28,4 @@ services:
       - ./:/home/proj/
     depends_on:
       - mydb
+
