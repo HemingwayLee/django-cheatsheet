@@ -1,0 +1,136 @@
+{% csrf_token %}
+
+{% load static %}
+
+<html>
+<head>
+  <style>
+  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div style="color: red" id="msg"></div>
+  <div class="input-group">
+    <input id="myurl" type="text" style="width:100%;" placeholder="url"></input>
+    <span class="input-group-btn">
+      <button class="btn btn-primary" onclick="addUrl();">
+        <i class="glyphicon glyphicon-ok-circle"></i> Add
+      </button>
+    </span>
+  </div>
+  <hr>
+  <div class="input-group">
+    <input id="targeturl" type="text" style="width:100%;" placeholder="url"></input>
+    <span class="input-group-btn">
+      <button class="btn btn-primary" onclick="doSideBySide();">
+        <i class="glyphicon glyphicon-ok-circle"></i> Side by Side
+      </button>
+    </span>
+  </div>
+  <hr>
+  <table border="1" id="workingFolder" class="table table-striped">
+    <thead>
+      <tr><td>Dir</td><td>Folders</td></tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</body>
+<script>
+  $("#msg").hide();
+
+  const gDirs = {{ DIRS|safe }};
+  console.log(gDirs);
+  showDirs(gDirs);
+
+  function showDirs(dirs) {
+    $("#workingFolder > tbody").empty();
+    $.each(dirs, function(idx, ele) {
+      var folders = "";
+      $.each(ele[Object.keys(ele)[0]], function(i, folder) {
+        console.log(folder);
+        folders += `'${folder}'` + "<br>"
+      })
+
+      $("#workingFolder > tbody").append(
+        $("<tr>").append(
+          $("<td>").text(Object.keys(ele)[0]),
+          $("<td>").html(folders)
+        ),
+      );
+    });
+  }
+
+  function addUrl() {
+    if (!$("#myurl").val()) {
+      $('#msg').show();
+      $('#msg').text("input is empty");
+      return;
+    }
+
+    const urlTarget = window.location.protocol + "//" + window.location.host + '/api/url/crawl/';
+    
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      data: JSON.stringify({
+        url: $("#myurl").val()
+      }),
+      url: urlTarget,
+      success: function(data) {
+        $("#msgBody").text("New url added successfully");
+        $("#msgOk").click(function() {
+          $("#msgOk").click($('#msgModal').modal('hide'));
+          window.location.reload();
+        });
+
+        $("#msgModal").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      },
+      error: function(xhr, textStatus, errorThrown) {
+        $('#msg').show();
+        if (xhr.status == 409) {
+          $('#msg').text("URL already exists");
+        } else {
+          $('#msg').text("Internal server error");
+        }
+      },
+    });
+  }
+
+  function doSideBySide() {
+    if (!$("#targeturl").val()) {
+      $('#msg').show();
+      $('#msg').text("input is empty");
+      return;
+    }
+
+    const hashcode = $("#targeturl").val();
+    const urlTarget = window.location.protocol + "//" + window.location.host + `/api/sbs/${hashcode}/`;
+    window.location.href = urlTarget;
+  }
+</script>
+
+<div class="modal fade" id="msgModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="msgTitle" class="modal-title">Message</h4>
+      </div>
+      <div id="msgBody" class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="msgOk" onclick="$('#msgModal').modal('hide');">
+          <i class="glyphicon glyphicon-ok-circle"></i> Okay
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</html>

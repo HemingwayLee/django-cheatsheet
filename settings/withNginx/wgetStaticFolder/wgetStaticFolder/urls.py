@@ -18,7 +18,8 @@ from django.urls import path
 from main import views
 
 urlpatterns = [
+    path("api/", views.main),
     path('api/admin/', admin.site.urls),
-    path('api/', views.hello),
-    path('api/sbs/', views.side_by_side),
+    path('api/url/crawl/', views.crawl_url),
+    path('api/sbs/<str:hashcode>/', views.side_by_side),
 ]
