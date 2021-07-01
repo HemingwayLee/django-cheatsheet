@@ -18,8 +18,6 @@ COUNT=$(PGPASSWORD=${POSTGRES_PASSWORD} psql -h ${POSTGRES_HOST} -p 5432 -U post
 if [ "$COUNT" -gt "0" ] ; then
   >&2 echo "Superuser Exist!!! This is hotfix mode"
   >&2 echo "No need to create superuser"
-  cd /home/proj/scripts/
-  ./create_superuser.sh
 else
   >&2 echo "Superuser NOT Exist!!! This is fresh install mode"
   cd /home/proj/scripts/
