@@ -13,6 +13,8 @@ services:
       dockerfile: Dockerfile
     command: /home/proj/scripts/init.sh
     environment:
+      DJANGO_USER: root
+      DJANGO_PASS: rootroot
       WEBADDRESS: 127.0.0.1
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pass
@@ -20,6 +22,8 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_DB_NAME: dj
       PYTHONUNBUFFERED: 1
+    volumes:
+      - ./:/home/proj/
     ports:
       - "8000:8000"
     depends_on:
@@ -33,3 +37,5 @@ services:
       - mydb
     depends_on:
       - mydb
+
+
