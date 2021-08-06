@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<div class="container-fluid">
+  <div class="row content">
+    {% include "side.html" %}
+    <div class="col-sm-9">
+      <h2>Dashboard</h2>
+      <table id="keys" border="1">
+        <thead>
+          <tr>
+            <td>create_at</td>
+            <td>mac</td>
+            <td>name</td>
+            <td>page_count_limit</td>
+            <td>secret</td>
+            <td>expired_date</td>
+            <td>license_key</td>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  const keys = {{ KEYS|safe }};
+  console.log(keys);
+
+  $.each(keys, function(idx, ele){
+    console.log(ele);
+    var tr = $("<tr>").append(
+      $("<td>").text(ele["fields"]["dt"]),
+      $("<td>").text(ele["fields"]["mac"]),
+      $("<td>").text(ele["fields"]["name"]),
+      $("<td>").text(ele["fields"]["page_count_limit"]),  
+      $("<td>").text(ele["fields"]["secret"]),
+      $("<td>").text(ele["fields"]["expired_date"]),
+      $("<td>").text(ele["fields"]["license_key"]),
+    );
+    $("#keys > thead").append(tr);
+  })
+</script>
+
+{% endblock %}

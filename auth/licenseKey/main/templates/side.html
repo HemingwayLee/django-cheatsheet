@@ -1,0 +1,33 @@
+<script>
+  $(document).ready(function () {
+    
+  });
+</script>
+
+<div class="col-sm-3 sidenav">
+  <ul class="nav nav-pills nav-stacked">
+    <h3 style="text-align: center"><b>Hello</b></h3>
+    <li id="dashboard">
+      <a href="#"><i class="glyphicon glyphicon-th"></i> Dashboard</a>
+    </li>
+    <li id="create">
+      <a href="#"><i class="glyphicon glyphicon-user"></i> Create</a>
+    </li>
+    <li id="valid">
+      <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Valid</a>
+    </li>
+  </ul>
+</div>
+<script>
+  const pageId = "{{PAGEID}}";
+  $(`#${pageId}`).addClass("active");
+
+  const urlDashboard = window.location.protocol + "//" + window.location.host + '/dashboard/';
+  document.getElementById("dashboard").firstElementChild.setAttribute("href", urlDashboard);
+
+  const urlCreate = window.location.protocol + "//" + window.location.host + '/create/';
+  document.getElementById("create").firstElementChild.setAttribute("href", urlCreate);
+
+  const urlValid = window.location.protocol + "//" + window.location.host + '/valid/';
+  document.getElementById("valid").firstElementChild.setAttribute("href", urlValid);
+</script>

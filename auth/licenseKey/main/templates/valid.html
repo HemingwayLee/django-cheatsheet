@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<div class="container-fluid">
+  <div class="row content">
+    {% include "side.html" %}
+    <div class="col-sm-9">
+      <h2>Valid License Key</h2>
+      <label for="akey">Your license key:</label>
+      <input id="akey" type="text" />
+      <br>
+      <button id="validkey" class="btn btn-primary">Valid Key</button>
+      <div id="decomposed_json"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#validkey').on('click', function() {
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      data: JSON.stringify({
+        mykey: $("#akey").val()
+      }),
+      url: 'http://127.0.0.1:8000/do_validation/',
+      success: function(data) {
+        console.log(data);
+        $("#decomposed_json").text(JSON.stringify(data));
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        $('#res').text(`${textStatus}`);
+      },
+    });
+  });
+</script>
+
+{% endblock %}
