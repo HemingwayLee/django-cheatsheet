@@ -13,6 +13,7 @@
         <thead>
           <tr>
             <td>create_at</td>
+            <td>tenant</td>
             <td>mac</td>
             <td>name</td>
             <td>page_count_limit</td>
@@ -36,6 +37,7 @@
     console.log(ele);
     var tr = $("<tr>").append(
       $("<td>").text(ele["fields"]["dt"]),
+      $("<td>").text(ele["fields"]["tenant"]),
       $("<td>").text(ele["fields"]["mac"]),
       $("<td>").text(ele["fields"]["name"]),
       $("<td>").text(ele["fields"]["page_count_limit"]),  

@@ -11,10 +11,13 @@
       <h2>Create License Key</h2>
       <div id="res"></div>
       <label for="mac">Mac address:</label>
-      <input id="mac" type="text" />
+      <input id="mac" type="text" disabled />
+      <br>
+      <label for="tenant">Tenant:</label>
+      <input id="tenant" type="text" />
       <br>
       <label for="username">Username:</label>
-      <input id="username" type="text" />
+      <input id="username" type="text" disabled />
       <br>
       <label for="pagecount">Page count:</label>
       <input id="pagecount" type="text" />
@@ -36,16 +39,12 @@
       contentType: 'application/json',
       headers: {'X-CSRFToken': '{{ csrf_token }}'},
       data: JSON.stringify({
-        mac: $("#mac").val(),
-        username: $("#username").val(),
+        tenant: $("#tenant").val(),
         pagecount: $("#pagecount").val(),
         expireddate: $("#expireddate").val(),
       }),
       url: 'http://127.0.0.1:8000/insert/',
       success: function(data) {
-        // const jsonPretty = JSON.stringify(data, null, '\t');
-        // $("#res").text(jsonPretty);
-        // console.log(data);
         $("#mykey").text(data["key"]);
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {

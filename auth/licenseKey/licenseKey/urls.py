@@ -24,5 +24,6 @@ urlpatterns = [
     path('insert/', views.insert),
     path('create/', views.create),
     path('valid/', views.valid),
+    path('register/', views.register),
 ]
 

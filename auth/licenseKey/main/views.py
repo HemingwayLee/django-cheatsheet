@@ -32,19 +32,20 @@ def insert(request):
         data = request.body.decode('utf-8') 
         received_json_data = json.loads(data) 
 
-        mac = received_json_data['mac']
-        username = received_json_data['username']
+        tenant = received_json_data['tenant']
         pagecount = received_json_data['pagecount']
         expireddate = received_json_data['expireddate']
         
-        # TODO: make it unique
-        secret = ''.join(random.sample(string.ascii_lowercase, 16))
+        while True:
+            secret = ''.join(random.sample(string.ascii_lowercase, 16))
+            if not MyKey.objects.filter(secret=secret).exists():
+                break
+
         aes = AESCipher(secret)
         license_key=aes.encrypt(data)
 
         aKey = MyKey(
-            mac=mac, 
-            name=username, 
+            tenant=tenant, 
             page_count_limit=pagecount, 
             expired_date=expireddate,
             secret=secret,
@@ -91,23 +92,28 @@ def do_validation(request):
         print(traceback.format_exc())
         return HttpResponse(status=500)
 
-# @require_http_methods(["POST"])
-# def dosignin(request):
-#     try:
-#         user = authenticate(
-#             username=request.POST["account"], 
-#             password=request.POST["password"])
-#         if not user:
-#             return HttpResponse(status=404)
+@require_http_methods(["POST"])
+def register(request):
+    try:
+        data = request.body.decode('utf-8') 
+        received_json_data = json.loads(data) 
 
-#         login(request, user)
-#         return HttpResponse(status=200)
-#     except:
-#         print(traceback.format_exc())
-#         return HttpResponse(status=500)
+        akey = received_json_data['mykey']
+        if not MyKey.objects.filter(license_key=akey).exists():
+            HttpResponse(status=404)
+        
+        username = received_json_data['username']
+        mac = received_json_data['mac']
+        if MyKey.objects.filter(username=username, mac=mac).exists():
+            HttpResponse(status=409)
+        
+        # entry = Entries.objects.filter(id=eid, author=user.first())
+        # entry.update(notification=entry.first().notification+1)
 
-# @require_http_methods(["POST"])
-# def signout(request):
-#     logout(request)
-#     return HttpResponse(status=200)
+        # TODO: here 1 to many relationship
+        theKey = MyKey.objects.filter(license_key=akey)
 
+        return JsonResponse({}, safe=False, status=200)
+    except:
+        print(traceback.format_exc())
+        return HttpResponse(status=500)

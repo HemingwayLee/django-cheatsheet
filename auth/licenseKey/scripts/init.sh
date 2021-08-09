@@ -11,7 +11,7 @@ pwd
 ls
 
 cd /home/proj/
-python3 manage.py makemigrations
+python3 manage.py makemigrations main
 python3 manage.py migrate
 
 cd /home/proj/scripts/
