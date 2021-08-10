@@ -6,6 +6,8 @@ services:
     command: python3 /home/proj/manage.py runserver 0.0.0.0:8000
     environment:
       PYTHONUNBUFFERED: 1
+    volumes:
+      - ./:/home/proj/
     ports:
       - "8000:8000"
 

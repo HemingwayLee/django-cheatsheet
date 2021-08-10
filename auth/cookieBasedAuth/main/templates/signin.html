@@ -4,6 +4,8 @@
 
 <script>
   function doSubmit(e) {
+    console.log("{{csrf_token}}");
+
     e.preventDefault();
 
     $.ajax({

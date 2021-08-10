@@ -19,7 +19,10 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_DB_NAME: abc
       PYTHONUNBUFFERED: 1
+    volumes:
+      - ./:/home/proj/
     ports:
       - "8000:8000"
     depends_on:
       - mydb
+
