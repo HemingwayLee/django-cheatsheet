@@ -12,10 +12,11 @@
       <table id="keys" border="1">
         <thead>
           <tr>
-            <td>create_at</td>
-            <td>tenant</td>
+            <td>user_create_at</td>
             <td>mac</td>
-            <td>name</td>
+            <td>username</td>
+            <td>tenant_created_at</td>
+            <td>tenant</td>
             <td>page_count_limit</td>
             <td>secret</td>
             <td>expired_date</td>
@@ -36,14 +37,15 @@
   $.each(keys, function(idx, ele){
     console.log(ele);
     var tr = $("<tr>").append(
-      $("<td>").text(ele["fields"]["dt"]),
-      $("<td>").text(ele["fields"]["tenant"]),
-      $("<td>").text(ele["fields"]["mac"]),
-      $("<td>").text(ele["fields"]["name"]),
-      $("<td>").text(ele["fields"]["page_count_limit"]),  
-      $("<td>").text(ele["fields"]["secret"]),
-      $("<td>").text(ele["fields"]["expired_date"]),
-      $("<td>").text(ele["fields"]["license_key"]),
+      $("<td>").text(ele["dt"]),
+      $("<td>").text(ele["mac"]),
+      $("<td>").text(ele["username"]),
+      $("<td>").text(ele["tenant_created_at"]),  
+      $("<td>").text(ele["tenant"]),
+      $("<td>").text(ele["page_count_limit"]),  
+      $("<td>").text(ele["secret"]),
+      $("<td>").text(ele["expired_date"]),
+      $("<td>").text(ele["license_key"]),
     );
     $("#keys > thead").append(tr);
   })

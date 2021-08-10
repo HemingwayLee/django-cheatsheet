@@ -8,31 +8,48 @@
   <div class="row content">
     {% include "side.html" %}
     <div class="col-sm-9">
-      <h2>Create License Key</h2>
       <div id="res"></div>
-      <label for="mac">Mac address:</label>
-      <input id="mac" type="text" disabled />
-      <br>
-      <label for="tenant">Tenant:</label>
-      <input id="tenant" type="text" />
-      <br>
-      <label for="username">Username:</label>
-      <input id="username" type="text" disabled />
-      <br>
-      <label for="pagecount">Page count:</label>
-      <input id="pagecount" type="text" />
-      <br>
-      <label for="expireddate">Expired Date:</label>
-      <input id="expireddate" type="text" />
-      <br>
-      <button id="insert" class="btn btn-primary">Create</button>
+      <table>
+        <tbody>
+          <tr>
+            <td style="padding-right: 10px"><h2>Create License Key</h2></td>
+            <td><h2>Register an User</h2></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="tenant">Tenant:</label>
+              <input id="tenant" type="text" />
+              <br>
+              <label for="pagecount">Page count:</label>
+              <input id="pagecount" type="text" />
+              <br>
+              <label for="expireddate">Expired Date:</label>
+              <input id="expireddate" type="text" />
+              <br>
+              <button id="insertTenant" class="btn btn-primary">Create Tenant</button>
+            </td>
+            <td>
+              <label for="mac">License Key:</label>
+              <input id="licensekey" type="text" />
+              <br>
+              <label for="mac">Mac address:</label>
+              <input id="mac" type="text" />
+              <br>
+              <label for="username">Username:</label>
+              <input id="username" type="text" />
+              <br>
+              <button id="registerUser" class="btn btn-primary">Register User</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div id="mykey"></div>
     </div>
   </div>
 </div>
 
 <script>
-  $('#insert').on('click', function() {
+  $('#insertTenant').on('click', function() {
     $.ajax({
       type: 'POST',
       dataType: 'json',
@@ -43,9 +60,30 @@
         pagecount: $("#pagecount").val(),
         expireddate: $("#expireddate").val(),
       }),
-      url: 'http://127.0.0.1:8000/insert/',
+      url: 'http://127.0.0.1:8000/insert/tenant/',
       success: function(data) {
         $("#mykey").text(data["key"]);
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        $('#res').text(`${textStatus}`);
+      },
+    });
+  });
+
+  $('#registerUser').on('click', function() {
+    $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      contentType: 'application/json',
+      headers: {'X-CSRFToken': '{{ csrf_token }}'},
+      data: JSON.stringify({
+        licensekey: $("#licensekey").val(),
+        mac: $("#mac").val(),
+        username: $("#username").val(),
+      }),
+      url: 'http://127.0.0.1:8000/register/user/',
+      success: function(data) {
+        $('#res').text("successful");
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         $('#res').text(`${textStatus}`);

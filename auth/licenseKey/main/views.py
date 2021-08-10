@@ -3,23 +3,33 @@ import traceback
 import json
 import string
 import random
+from django.db.models import F
 from django.core import serializers
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-# from django.contrib.auth import login, logout, authenticate
-# from django.contrib.auth.models import User
-# from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
-from .models import MyKey
+from .models import MyKey, MyUser
 from .myaes import AESCipher
-
+from django.core.serializers.json import DjangoJSONEncoder
 
 @require_http_methods(["GET"])
 def hello(request):
-    keys = serializers.serialize(
-        'json', 
-        MyKey.objects.all()
+    selection = MyUser.objects.annotate(
+        tenant_created_at=F('key__dt'),
+        tenant=F('key__tenant'),
+        page_count_limit=F('key__page_count_limit'),
+        expired_date=F('key__expired_date'),
+        secret=F('key__secret'),
+        license_key=F('key__license_key')
     )
+    
+    keys = json.dumps(list(selection.values()), cls=DjangoJSONEncoder)
+    print(keys)
+
+    # keys = serializers.serialize(
+    #     'json', 
+    #     selection
+    # )
     
     return render(request, "dashboard.html", {
         "PAGEID": "dashboard",
@@ -27,7 +37,7 @@ def hello(request):
     })
 
 @require_http_methods(["POST"])
-def insert(request):
+def insert_tenant(request):
     try:
         data = request.body.decode('utf-8') 
         received_json_data = json.loads(data) 
@@ -42,7 +52,7 @@ def insert(request):
                 break
 
         aes = AESCipher(secret)
-        license_key=aes.encrypt(data)
+        license_key = aes.encrypt(data)
 
         aKey = MyKey(
             tenant=tenant, 
@@ -84,7 +94,7 @@ def do_validation(request):
         print(theKey.secret)
         aes = AESCipher(theKey.secret)
         
-        license_key=aes.decrypt(akey)
+        license_key = aes.decrypt(akey)
         print(license_key)
         
         return JsonResponse(json.loads(license_key), safe=False, status=200)
@@ -98,22 +108,27 @@ def register(request):
         data = request.body.decode('utf-8') 
         received_json_data = json.loads(data) 
 
-        akey = received_json_data['mykey']
+        akey = received_json_data['licensekey']
         if not MyKey.objects.filter(license_key=akey).exists():
             HttpResponse(status=404)
         
         username = received_json_data['username']
         mac = received_json_data['mac']
-        if MyKey.objects.filter(username=username, mac=mac).exists():
+        if MyUser.objects.filter(username=username, mac=mac).exists():
             HttpResponse(status=409)
         
-        # entry = Entries.objects.filter(id=eid, author=user.first())
-        # entry.update(notification=entry.first().notification+1)
-
-        # TODO: here 1 to many relationship
         theKey = MyKey.objects.filter(license_key=akey)
+        aUser = MyUser(
+            username=username, 
+            mac=mac, 
+            key=theKey.first()
+        )
+        aUser.save()
 
         return JsonResponse({}, safe=False, status=200)
     except:
         print(traceback.format_exc())
         return HttpResponse(status=500)
+
+
+

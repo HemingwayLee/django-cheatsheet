@@ -21,9 +21,9 @@ urlpatterns = [
     path('', views.hello),
     path('do_validation/', views.do_validation),
     path('dashboard/', views.hello),
-    path('insert/', views.insert),
+    path('insert/tenant/', views.insert_tenant),
     path('create/', views.create),
     path('valid/', views.valid),
-    path('register/', views.register),
+    path('register/user/', views.register),
 ]
 
