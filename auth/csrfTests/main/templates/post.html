@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% csrf_token %}
+<script>
+  function add2msg(text) {
+    $("#msg").append($("<div>").text(text));
+  }
+
+  function post1(e) {
+    add2msg("post1()");
+    add2msg("{{csrf_token}}");
+
+    e.preventDefault();
+
+    $.ajax({
+      type: "POST",
+      url: "http://127.0.0.1:8000/dopost1/",
+      data: $(this).serialize(),
+      success: function (data) {
+        add2msg(JSON.stringify(data));
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+      },
+    });
+  }
+  
+  function post2() {
+    add2msg("post2()");
+    add2msg("{{csrf_token}}");
+
+    const csrftoken = "{{csrf_token}}";
+
+    $.ajax({
+      url: "http://127.0.0.1:8000/dopost1/",
+      // headers: { 'X-CSRFToken': csrftoken },
+      data: { 
+        'input1': $("#input1").val(), 
+        'input2': $("#input2").val()
+      },
+      type: "POST",
+      success: function (data) {
+        add2msg(JSON.stringify(data));
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+      },
+    });
+  }
+
+  $(document).ready(function () {
+    $('#myposttest').submit(post1);
+    $('#post2').on('click', post2);
+  });
+</script>
+
+<h2>Post Page</h2>
+<div id="msg"></div>
+<form id="myposttest" method="post">
+  {% csrf_token %}
+  <label for="input1">Input 1:</label>
+  <input name="input1" id="input1" style="width:100%;"></input>
+  <label for="input2">Input 2:</label>
+  <input name="input2" id="input2" style="width:100%;"></input>
+  <hr>
+  <input class="btn btn-primary" type="submit" id="post1" value="Post 1"></input>
+</form>
+
+<button type="button" id="post2" class="btn btn-success">Post 2</button>
+
+{% endblock %}
