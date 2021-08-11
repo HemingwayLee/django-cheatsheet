@@ -52,8 +52,15 @@ def code2(request):
 
 @require_http_methods(["GET"])
 @login_required(login_url='/signin/')
-def showpost(request):
+def showposttemplate(request):
     return render(request, "post.html")
+
+
+@require_http_methods(["GET"])
+@login_required(login_url='/signin/')
+def showpostmanually(request):
+    return render(request, "post2.html")
+
 
 @require_http_methods(["POST"])
 def dopost1(request):

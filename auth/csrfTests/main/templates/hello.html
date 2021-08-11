@@ -4,8 +4,12 @@
 
 {% csrf_token %}
 <script>
-  function testpost() {
-    window.location.href = "http://127.0.0.1:8000/show/post/";
+  function postCsrfWithTemplate() {
+    window.location.href = "http://127.0.0.1:8000/show/post/template/";
+  }
+
+  function postCsrfManually() {
+    window.location.href = "http://127.0.0.1:8000/show/post/manually/";
   }
 
   function doSignout() {
@@ -40,7 +44,7 @@
 
 <h2>Hello</h2>
 <button type="button" id="signout" class="btn btn-primary">Sign out</button>
-
-<button type="button" class="btn btn-danger" onclick="testpost();">Test Post</button>
+<button type="button" class="btn btn-danger" onclick="postCsrfWithTemplate();">Post With Template</button>
+<button type="button" class="btn btn-warning" onclick="postCsrfManually();">Post Manually</button>
 
 {% endblock %}

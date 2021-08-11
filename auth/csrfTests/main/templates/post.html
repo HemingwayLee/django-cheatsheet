@@ -4,12 +4,12 @@
 
 {% csrf_token %}
 <script>
-  function add2msg(text) {
-    $("#msg").append($("<div>").text(text));
+  function add2msg(text, color="black") {
+    $("#msg").append($(`<div style="color: ${color}">`).text(text));
   }
 
-  function post1(e) {
-    add2msg("post1()");
+  function post_by_submit(e) {
+    add2msg("post_by_submit()");
     add2msg("{{csrf_token}}");
 
     e.preventDefault();
@@ -22,20 +22,21 @@
         add2msg(JSON.stringify(data));
       },
       error: function (xhr, textStatus, errorThrown) {
-        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+        add2msg(`${textStatus}: [${xhr.status}] ${errorThrown}`, "red");
       },
     });
   }
   
-  function post2() {
-    add2msg("post2()");
+  function post_with_header() {
+    add2msg("post_with_header()");
     add2msg("{{csrf_token}}");
 
     const csrftoken = "{{csrf_token}}";
 
     $.ajax({
       url: "http://127.0.0.1:8000/dopost1/",
-      // headers: { 'X-CSRFToken': csrftoken },
+      // NOTE: if we comment out `headers`, it is going to be 403
+      headers: { 'X-CSRFToken': csrftoken },
       data: { 
         'input1': $("#input1").val(), 
         'input2': $("#input2").val()
@@ -45,18 +46,18 @@
         add2msg(JSON.stringify(data));
       },
       error: function (xhr, textStatus, errorThrown) {
-        $('#message').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+        add2msg(`${textStatus}: [${xhr.status}] ${errorThrown}`, "red");
       },
     });
   }
 
   $(document).ready(function () {
-    $('#myposttest').submit(post1);
-    $('#post2').on('click', post2);
+    $('#myposttest').submit(post_by_submit);
+    $('#post_with_header').on('click', post_with_header);
   });
 </script>
 
-<h2>Post Page</h2>
+<h2>Post with Django template</h2>
 <div id="msg"></div>
 <form id="myposttest" method="post">
   {% csrf_token %}
@@ -65,9 +66,9 @@
   <label for="input2">Input 2:</label>
   <input name="input2" id="input2" style="width:100%;"></input>
   <hr>
-  <input class="btn btn-primary" type="submit" id="post1" value="Post 1"></input>
+  <input class="btn btn-primary" type="submit" id="post_by_submit" value="Post By Submit"></input>
 </form>
 
-<button type="button" id="post2" class="btn btn-success">Post 2</button>
+<button type="button" id="post_with_header" class="btn btn-success">Post With Header</button>
 
 {% endblock %}

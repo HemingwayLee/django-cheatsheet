@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Csrf Manually</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+  <style>
+    .row.content {height: 1500px}
+    
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  function add2msg(text, color="black") {
+    $("#msg").append($(`<div style="color: ${color}">`).text(text));
+  }
+
+  function post_with_mytoken() {
+    $.ajax({
+      url: "http://127.0.0.1:8000/code/?secret=ELECTRON_APP",
+      type: "GET",
+      success: function (data) {
+        add2msg(JSON.stringify(data));
+        const csrftoken = data["token"];
+        $.ajax({
+          url: "http://127.0.0.1:8000/dopost1/",
+          headers: { 'X-CSRFToken': csrftoken /*+ "aa"*/ },
+          data: { 
+            'input1': $("#input1").val(), 
+            'input2': $("#input2").val()
+          },
+          type: "POST",
+          success: function (data) {
+            add2msg(JSON.stringify(data));
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            add2msg(`${textStatus}: [${xhr.status}] ${errorThrown}`, "red");
+          },
+        });
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        add2msg(`${textStatus}: [${xhr.status}] ${errorThrown}`, "red");
+      },
+    });
+  }
+  
+  function post_with_header() {
+    // It looks like Django's Jinja2 template backend 
+    //  adds {{ csrf_token }} to the context of all templates 
+
+    add2msg("post_with_header()");
+    add2msg("{{csrf_token}}");
+
+    const csrftoken = "{{csrf_token}}";
+
+    $.ajax({
+      url: "http://127.0.0.1:8000/dopost1/",
+      // NOTE: if we comment out `headers`, it is going to be 403
+      headers: { 'X-CSRFToken': csrftoken },
+      data: { 
+        'input1': $("#input1").val(), 
+        'input2': $("#input2").val()
+      },
+      type: "POST",
+      success: function (data) {
+        add2msg(JSON.stringify(data));
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        add2msg(`${textStatus}: [${xhr.status}] ${errorThrown}`, "red");
+      },
+    });
+  }
+
+  $(document).ready(function () {
+    console.log("<---- ready <-----");
+    console.log($("input[type='hidden']").attr("value"));
+    console.log("-----> ready ----->");
+
+    add2msg($("input[type='hidden']").attr("value"));    
+    $('#post_with_header').on('click', post_with_header);
+    $('#post_with_mytoken').on('click', post_with_mytoken);
+  });
+</script>
+
+<h2>Post Manually (csrf token added to this page secretly)</h2>
+<div id="msg"></div>
+<form id="myposttest" method="post">
+  <label for="input1">Input 1:</label>
+  <input name="input1" id="input1" style="width:100%;"></input>
+  <label for="input2">Input 2:</label>
+  <input name="input2" id="input2" style="width:100%;"></input>
+  <hr>
+</form>
+
+<button type="button" id="post_with_header" class="btn btn-success">Post With Header</button>
+<button type="button" id="post_with_mytoken" class="btn btn-danger">Get Token manually</button>
+
+
+</body>
+</html>
