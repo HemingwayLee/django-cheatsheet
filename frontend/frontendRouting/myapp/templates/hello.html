@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simple Vanilla Router</title>
+  <script>
+    const about = "<h1>I am About Page.</h1>";
+    const home = "<h1>I am home Page.</h1>";
+    const contact = "<h1>I am contact Page.</h1>";
+    const notfound = "<h1>404, not found.</h1>";
+  </script>
+</head>
+<body>
+  <ul class="navbar-list">
+    <li class="navbar-item"><a href="#" onclick="onNavigate('/about'); return false;">About</a></li>
+    <li class="navbar-item"><a href="#" onclick="onNavigate('/'); return false;">Home</a></li>
+    <li class="navbar-item"><a href="#" onclick="onNavigate('/contact'); return false;">Contact</a></li>
+  </ul>
+  <div id="root"></div>
+  <script>
+    const routes = {
+      '/' : home,
+      '/home' : home,
+      '/contact' : contact,
+      '/about' : about,
+      '/404': notfound,
+    };
+
+    const rootDiv = document.getElementById('root');
+    rootDiv.innerHTML = routes[window.location.pathname];
+
+    const onNavigate = (pathname) => {
+      window.history.pushState(
+        {},
+        pathname,
+        window.location.origin + pathname
+      );
+      rootDiv.innerHTML = routes[pathname];
+    }
+
+    const url = "{{PAGE_URL}}";
+    console.log(url);
+    if (url in routes) {
+      onNavigate(url);
+    } else {
+      onNavigate("/404");
+    }
+  </script>
+</body>
+</html>
