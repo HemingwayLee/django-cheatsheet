@@ -8,7 +8,9 @@ from rest_framework.authtoken.models import Token
 import json
 
 @api_view(["GET"])
-@login_required(login_url='/signin/')
+# login_required is not working here...
+#  Use MyMiddleware instead
+# @login_required(login_url='/signin/')
 def hello(request):
     return render(request, "hello.html")
 
@@ -43,10 +45,8 @@ def do_signin(request):
         print(f"inner meta {request._request.META}")
         request._request.method = 'GET'
         request._request.META['Authorization'] = 'Token ' + str(token.key)
-        return hello(request._request)
-
-        # Or maybe I can simply do this...
-        # return render(request, "hello.html")
+        
+        return render(request, "hello.html")
     else:
         print("user not exist...")
         return render(request, 'form_template.html')
@@ -54,5 +54,5 @@ def do_signin(request):
 @api_view(["GET"])
 def signout(request):
     auth.logout(request)
-    return render(request, 'form_template.html')
-
+    
+    return HttpResponseRedirect("/hello/")
