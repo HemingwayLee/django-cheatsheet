@@ -9,4 +9,5 @@
 ## helloDjangoRest
 * not able return token to frontend
 * not able to redirect, do return another api 
-
+* Even you login, when you type `http://127.0.0.0:8000/hello/` on the browser, it will think you are logout because there is no token in the request
+  * Need frontend routing
