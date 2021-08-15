@@ -1,0 +1,129 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>My Token Auth One Page Webapp</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="{% static "js/router.js" %}"></script>
+  <style>
+    .row.content {height: 1500px}
+    
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row content">
+      <div class="col-sm-3 sidenav">
+        {% if request.user.is_authenticated %}
+          <h4>{{ request.user.get_username }}</h4>
+        {% endif %}
+        <ul class="nav nav-pills nav-stacked">
+          <li><a data-toggle="tab" href="#about" onclick="onNavigate('/about', 'root'); return false;">About</a></li>
+          <li class="active"><a data-toggle="tab" href="#home" onclick="onNavigate('/', 'root'); return false;">Home</a></li>
+          <li><a data-toggle="tab" href="#contact" onclick="onNavigate('/contact', 'root'); return false;">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-9">
+        <div class="tab-content">
+          <div id="root"></div>
+          {% if request.user.is_authenticated %}
+            <!-- TODO: add header to request -->
+            <a class="btn btn-primary" href="/do_signout/">Sign out</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const is_authenticated = "{{ request.user.is_authenticated }}";
+    const url = "{{PAGE_URL}}";
+    console.log(url);
+
+    // function doSubmit(e) {
+    //   e.preventDefault();
+    //   const urlTarget = window.location.protocol + "//" + window.location.host + '/do_signin/';
+    //   // const urlRedirect = window.location.protocol + "//" + window.location.host + '/';
+    //   $.ajax({
+    //     type: "POST",
+    //     url: urlTarget,
+    //     data: $(this).serialize(),
+    //     success: function (data) {
+    //       $("#signinModal").modal("hide");
+    //     },
+    //     error: function (xhr, textStatus, errorThrown) {
+    //       if (xhr.status == 404) {
+    //         $('#message').text("Invalid account or password");
+    //       } else {
+    //         $('#message').text("Internal server error");
+    //       }
+    //       $("#message").show();
+    //     },
+    //   });
+    // }
+
+    function isLogin() {
+      return is_authenticated == "True" ? true : false;
+    }
+
+    $(document).ready(function () {
+      if (!isLogin()) {
+        $("#signinModal").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+      }
+
+      const rootDiv = document.getElementById('root');
+      rootDiv.innerHTML = routes[window.location.pathname];
+
+      if (url in routes) {
+        onNavigate(url, 'root');
+      } else {
+        onNavigate("/404", 'root');
+      }
+
+      // $('#loginform').submit(doSubmit);
+    });
+  </script>
+
+  <div class="modal fade" id="signinModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="signinTitle" class="modal-title">Signin</h4>
+        </div>
+        <div class="modal-body">
+          <form id="loginform" action="/do_signin/" method="post">
+            <label for="username">Account:</label>
+            <input name="username" id="username" style="width:100%;" oninput="$('#message').hide();"></input>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" style="width:100%;" oninput="$('#message').hide();"></input>
+            <div style="color: red" id="message"></div>
+            <hr>
+            <button class="btn btn-primary" type="submit" id="signin">
+              <i class="glyphicon glyphicon-log-out"></i> Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
