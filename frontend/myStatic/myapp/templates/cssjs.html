@@ -4,10 +4,15 @@
   {% load static %}
   <title>Use Static JS and CSS</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="{% static "css/test.css" %}"/>
+  <link rel="stylesheet" href="{% static 'css/test.css' %}"/>
 </head>
 <body>
   <h3 id="ans">This is Answer</h3>
+  <div id="msg"></div>
 </body>
-<script src="{% static "js/test.js" %}"></script>
+<script src="{% static 'js/test.js' %}"></script>
+<script>
+  const addr = "{% static 'js/test.js' %}";
+  document.getElementById("msg").innerText = `address is ${addr}`;
+</script>
 </html>
