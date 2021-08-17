@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>ajax header</title>
+</head>
+<body>
+  <h1>ajax header</h1>
+  <!-- <input type="text" id="servicename"/> -->
+  <button class="btn btn-primary" onclick="ajaxGet();">Get</button>
+  <button class="btn btn-primary" onclick="ajaxPost();">Post</button>
+  <hr>
+  <div style="color: red" id="alerts"></div>
+  <script>
+    function ajaxGet() {
+      $.ajax({
+        type: "GET",
+        url: "http://127.0.0.1:8000/show/get/",
+        headers: { hello: 'world', ywlee: 'me' },
+        success: function (data) {
+          $('#alerts').text(JSON.stringify(data));
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          $('#alerts').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+        },
+      });
+    }
+
+    function ajaxPost() {
+      const csrftoken = "{{csrf_token}}";
+      $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:8000/show/post/",
+        headers: { 'X-CSRFToken': csrftoken, foobar: 'yes' },
+        data: JSON.stringify({
+          foo: "bar",
+          fuzzy: "bear"
+        }),
+        success: function (data) {
+          $('#alerts').text(JSON.stringify(data));
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          $('#alerts').text(`${textStatus}: [${xhr.status}] ${errorThrown}`);
+        },
+      });
+    }
+  </script>
+</body>
+</html>
