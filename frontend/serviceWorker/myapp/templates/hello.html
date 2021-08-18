@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Service Worker</title>
+</head>
+<body>
+  <h1>Service Worker Demo</h1>
+  <!-- <input type="text" id="servicename"/> -->
+  <button class="btn btn-primary" onclick="addServiceWorker();">Add</button>
+  <button class="btn btn-primary" onclick="removeServiceWorker();">Remove</button>
+  <hr>
+  <button class="btn btn-danger" onclick="sendAjax();">Ajax</button>
+  <button class="btn btn-danger" onclick="reloadMe();">Refresh</button>
+  <button class="btn btn-danger" onclick="hrefLocation();">Href Location</button>
+  <hr>
+  <div style="color: red" id="alerts"></div>
+  <div id="root"></div>
+  <div id="msg"></div>
+  <script>
+    function sendAjax() {
+      const urlTarget = window.location.protocol + "//" + window.location.host + '/test/';
+      
+      $.ajax({
+        type: "GET",
+        url: urlTarget,
+        headers: { hello: 'world', hola: 'yes' },
+        success: function (data) {
+          $('#alerts').text(JSON.stringify(data));
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          $('#alerts').text(`${textStatus}`);
+        },
+      });
+    }
+
+    function reloadMe() {
+      // keep POST data
+      window.location.reload();
+    }
+
+    function hrefLocation() {
+      // discarding the POST data (perform a GET request)
+      window.location.href = window.location.href;
+    }
+
+    function msg2div(msg) {
+      var div = document.createElement("div");
+      div.innerText = msg;
+      document.getElementById("msg").appendChild(div);
+    }
+
+    function addServiceWorker() {
+      const addr = 'http://127.0.0.1:8000/hook.js';
+      console.log(addr);
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register(addr/*, {scope: 'http://127.0.0.1:8000/'}*/).then(function(registration) {
+          msg2div(`Service worker registered with scope: ${registration.scope}`);
+        }, function(err) {
+          msg2div(`ServiceWorker registration failed: ${err}`);
+        });
+      }
+    }
+    
+    function listServiceWorker() {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(v) { 
+          console.log(v);
+          msg2div(`registered service worker: + ${v.scope}`);
+        });
+      });
+    }
+
+    function removeServiceWorker() {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          msg2div(`remove service worker: + ${registration.scope}`);
+          registration.unregister();
+        } 
+      });
+    }
+
+    const home = "home page";
+    const contact = "contact page";
+    const about = "about page";
+    const notfound = "404, not found";
+    const routes = {
+      '/' : home,
+      '/home' : home,
+      '/contact' : contact,
+      '/about' : about,
+      '/404': notfound,
+    };
+
+    const rootDiv = document.getElementById('root');
+    rootDiv.innerHTML = routes[window.location.pathname];
+
+    const onNavigate = (pathname) => {
+      window.history.pushState(
+        {},
+        pathname,
+        window.location.origin + pathname
+      );
+      rootDiv.innerHTML = routes[pathname];
+    }
+
+    const url = "{{PAGE_URL}}";
+    console.log(url);
+    if (url in routes) {
+      onNavigate(url);
+    } else {
+      onNavigate("/404");
+    }
+
+    listServiceWorker();
+  </script>
+</body>
+</html>
