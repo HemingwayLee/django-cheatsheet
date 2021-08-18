@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 from myapp import views
 
 urlpatterns = [
@@ -23,4 +24,6 @@ urlpatterns = [
     path('media/', views.get_media),
     path('cssjs/', views.use_css_js),
     path('list/', views.list_static),
+    path('root/', views.root_js),
+    url(r'^move2root.js', views.root_js),
 ]

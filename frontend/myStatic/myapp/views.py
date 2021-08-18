@@ -4,6 +4,18 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.staticfiles.utils import get_files
 from django.contrib.staticfiles.storage import StaticFilesStorage
 
+# this can be access by `http://127.0.0.1:8000/move2root.js`
+def root_js(request):
+    print(settings.STATIC_ROOT)
+
+    filename = settings.STATIC_ROOT + '/js/move2root.js'
+    jsfile = open(filename, 'rb')
+    response = HttpResponse(content=jsfile)
+    response['Content-Type'] = 'text/javascript'
+    response['Content-Disposition'] = 'attachment; filename="%s"' % (filename)
+    return response
+
+
 def show(request):
     return render(request, 'hello.html')
 
