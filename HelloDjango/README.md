@@ -24,13 +24,15 @@ python manage.py help
 
 ## Project folder structure
 ```
-myproject/
-   manage.py
-   myproject/
-      __init__.py
-      settings.py
-      urls.py
-      wsgi.py
+|-- db.sqlite3
+|-- manage.py
+`-- mysite
+    |-- __init__.py
+    |-- asgi.py
+    |-- settings.py
+    |-- urls.py
+    `-- wsgi.py
 ```
 
 `__init__.py` is just for python, treat this folder as package
+
