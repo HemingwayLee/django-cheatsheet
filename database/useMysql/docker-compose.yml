@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  mydb:
+    image: mysql
+    container_name: mydb
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_USER: abc
+      MYSQL_PASSWORD: pass
+      MYSQL_DATABASE: dj 
+    ports:
+      - "3306:3306"
+    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO" --default-authentication-plugin="mysql_native_password" 
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /home/proj/scripts/init.sh
+    environment:
+      DJANGO_USER: root
+      DJANGO_PASS: rootroot
+      WEBADDRESS: 127.0.0.1
+      MYSQL_DB_NAME: dj
+      MYSQL_USER: abc
+      MYSQL_PASSWORD: pass
+      MYSQL_HOST: mydb
+      MYSQL_PORT: 3306
+      PYTHONUNBUFFERED: 1
+    volumes:
+      - ./:/home/proj/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mydb
+
+
