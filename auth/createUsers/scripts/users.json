@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "name": "staff1",
+      "password": "123456",
+      "email": "staff1@gmail.com",
+      "is_staff": 1
+    },
+    {
+      "name": "client1",
+      "password": "123456",
+      "email": "client1@gmail.com",
+      "is_staff": 0
+    },
+    {
+      "name": "client2",
+      "password": "123456",
+      "email": "client1@gmail.com",
+      "is_staff": 0
+    }
+  ]
+}
