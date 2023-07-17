@@ -5,8 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  {% csrf_token %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
   <script>
     function doSubmit(e) {
       e.preventDefault();
@@ -23,14 +25,51 @@
         },
       });
     }
+
+    function doSignout() {
+      $.ajax({
+        type: "POST",
+        url: "http://127.0.0.1:8000/dosignout/",
+        success: function (data) {
+          window.location.href = "http://127.0.0.1:8000/";
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          $('#message').text(`${textStatus}`);
+        },
+      });
+    }
+
+    function csrfSafeMethod(method) {
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
   
     $(document).ready(function () {
-      $("#signinModal").modal({
-        backdrop: 'static',
-        keyboard: false
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+          }
+        }
       });
+      $('#signout').on('click', doSignout);
   
-      $('#loginform').submit(doSubmit);
+      // We need to set
+      //   SESSION_COOKIE_HTTPONLY = False
+      // so we can use Cookies.get('sessionid') here...
+      // console.log(Cookies.get('sessionid'))
+
+      if (Cookies.get('sessionid') === '' || 
+        Cookies.get('sessionid') === null ||
+        Cookies.get('sessionid') === undefined) 
+      {
+        $("#signinModal").modal({
+          backdrop: 'static',
+          keyboard: false
+        });
+
+        $('#loginform').submit(doSubmit);
+      }
+      
     });
   </script>
   <style>
@@ -66,7 +105,8 @@
   <div class="container" style="width:100%">
     <div class="tab-content">
       <div class="tab-pane fade in active" id="tabThreshold">
-        <h2>Threshold</h2>
+        <h2>Hello</h2>
+        <button type="button" id="signout" class="btn btn-primary">Sign out</button>
       </div>
       <div class="tab-pane fade" id="tabBlur">
         <h2>Blur</h2>
