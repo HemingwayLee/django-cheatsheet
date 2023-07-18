@@ -18,10 +18,19 @@ with open('users.json') as f:
         username = ele['name']
         password = ele['password']
         email = ele['email']
+        first_name = ele['first_name']
+        last_name = ele['last_name']
         is_staff = bool(ele['is_staff'])
 
         if User.objects.filter(username=username).count()== 0:
-            User.objects.create_user(username, email, password, is_staff=is_staff)
+            User.objects.create_user(
+                username, 
+                email, 
+                password, 
+                is_staff=is_staff,
+                first_name=first_name,
+                last_name=last_name
+            )
             print(f'user {username} created!')
         else:
             print(f'Skip! user {username} exists...')
