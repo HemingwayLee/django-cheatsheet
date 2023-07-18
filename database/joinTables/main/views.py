@@ -44,6 +44,7 @@ def join(request):
     query = Office.objects.select_related("entity")
     print(query.query)
 
+    # Must put `entity__name` in values
     htmlCode = "<table border='1'><thead><tr><td>id</td><td>address</td><td>entity_name</td></tr></thead><tbody>"
     for val in query.values("id", "address", "entity__name"):
         print(val)
