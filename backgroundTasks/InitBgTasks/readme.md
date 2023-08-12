@@ -1,11 +1,10 @@
 # How to Run
 * Start the server:
 ```
-python3 manage.py runserver
+docker-compose build
+docker-compose up
 ```
  
-* Process tasks:
-```
-python3 manage.py process_tasks
-```
+* Process tasks are inside `init.sh`
+
 
