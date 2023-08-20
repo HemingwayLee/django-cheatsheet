@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /home/proj/scripts/init_sqlite3.sh
+    environment:
+      DJANGO_USER: root
+      DJANGO_PASS: rootroot
+      WEBADDRESS: 127.0.0.1
+      PYTHONUNBUFFERED: 1
+      DJANGO_SETTINGS_MODULE: multupleSettings.settings_sqlite3
+    volumes:
+      - ./:/home/proj/
+    ports:
+      - "8000:8000"
+
+
